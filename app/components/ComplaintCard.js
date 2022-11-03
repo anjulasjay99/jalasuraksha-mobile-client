@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  TouchableNativeFeedback,
+} from "react-native";
 
 function ComplaintCard({ navigation, complaint }) {
   const [daysCount, setdaysCount] = useState(0);
@@ -16,27 +22,31 @@ function ComplaintCard({ navigation, complaint }) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.detailsCont}>
-        <View>
-          <Text style={styles.headerText}>{complaint.category}</Text>
-          <Text style={styles.bodyText}>ID : {complaint.complaintId}</Text>
+    <TouchableNativeFeedback
+      onPress={() => navigation.navigate("View Complaint", { complaint })}
+    >
+      <View style={styles.container}>
+        <View style={styles.detailsCont}>
+          <View>
+            <Text style={styles.headerText}>{complaint.category}</Text>
+            <Text style={styles.bodyText}>ID : {complaint.complaintId}</Text>
+          </View>
+          <View>
+            <Text style={styles.bodyText}>{daysCount} days ago</Text>
+          </View>
         </View>
-        <View>
-          <Text style={styles.bodyText}>{daysCount} days ago</Text>
+        <View
+          style={[
+            styles.statusIndicator,
+            complaint.status === "Pending"
+              ? styles.pendingColor
+              : styles.resolvedColor,
+          ]}
+        >
+          <Text></Text>
         </View>
       </View>
-      <View
-        style={[
-          styles.statusIndicator,
-          complaint.status === "Pending"
-            ? styles.pendingColor
-            : styles.resolvedColor,
-        ]}
-      >
-        <Text></Text>
-      </View>
-    </View>
+    </TouchableNativeFeedback>
   );
 }
 

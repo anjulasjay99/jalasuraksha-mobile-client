@@ -8,11 +8,13 @@ import {
   ScrollView,
   RefreshControl,
   TextInput,
+  TouchableNativeFeedback,
 } from "react-native";
 import { LOCALHOST } from "@env";
 import axios from "axios";
 import ComplaintCard from "../components/ComplaintCard";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 function Complaints({ navigation }) {
   const [refreshing, setrefreshing] = useState(false);
@@ -47,8 +49,8 @@ function Complaints({ navigation }) {
       }
     });
 
-    setpendingComplaints(pendingArr);
-    setresolvedComplaints(resolvedArr);
+    setpendingComplaints(pendingArr.reverse());
+    setresolvedComplaints(resolvedArr.reverse());
   };
 
   //show toast message
@@ -101,7 +103,13 @@ function Complaints({ navigation }) {
             }
           })
           .map((cmp, index) => {
-            return <ComplaintCard key={index} complaint={cmp} />;
+            return (
+              <ComplaintCard
+                key={index}
+                complaint={cmp}
+                navigation={navigation}
+              />
+            );
           })}
 
         {resolvedComplaints.length > 0 ? (
@@ -127,10 +135,22 @@ function Complaints({ navigation }) {
             }
           })
           .map((cmp, index) => {
-            return <ComplaintCard key={index} complaint={cmp} />;
+            return (
+              <ComplaintCard
+                key={index}
+                complaint={cmp}
+                navigation={navigation}
+              />
+            );
           })}
       </ScrollView>
-
+      <TouchableNativeFeedback
+        onPress={() => navigation.navigate("New Complaint")}
+      >
+        <View style={styles.floatingBtn}>
+          <FontAwesome5 name="plus" size={24} color="white" />
+        </View>
+      </TouchableNativeFeedback>
       <StatusBar style="auto" />
     </View>
   );
@@ -190,6 +210,26 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginLeft: 5,
     marginRight: 5,
+  },
+  floatingBtn: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#2AB9FE",
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    bottom: 20,
+    right: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
   },
 });
 
