@@ -1,17 +1,11 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-function Home({ navigation }) {
+function AddFunds({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Hello World</Text>
-      <Pressable onPress={() => navigation.navigate("Complaints")}>
-        <Text style={{ color: "blue" }}>Complaints</Text>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate("Add Donates")}>
-        <Text style={{ color: "blue" }}>AddFunds</Text>
-      </Pressable>
+      <Text style={styles.heading}>Donate funds</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -34,4 +28,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default AddFunds;
