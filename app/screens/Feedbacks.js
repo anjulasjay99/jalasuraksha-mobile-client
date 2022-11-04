@@ -6,15 +6,61 @@ import {
   ScrollView,
   TouchableNativeFeedback,
   Image,
+  ToastAndroid,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
+import { LOCALHOST } from "@env";
+import axios from "axios";
 
 function Feedbacks({ route }) {
   const [reply, setreply] = useState("");
   const [feedbacks, setfeedbacks] = useState([]);
+
+  const submitReply = () => {
+    const complaintId = route.params.complaintId;
+    if (reply !== "") {
+      const data = {
+        name: "Anjula",
+        message: reply,
+      };
+      axios
+        .post(`http://${LOCALHOST}:8070/complaints/reply/${complaintId}`, data)
+        .then((res) => {
+          console.log(res.data.data);
+          if (!res.data.success) {
+            showToast("An unexpected error occurred. Try again later.");
+          } else {
+            setreply("");
+            getFeedbacks(complaintId);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          showToast("An unexpected error occurred. Try again later.");
+        });
+    }
+  };
+
+  const getFeedbacks = (id) => {
+    axios
+      .get(`http://${LOCALHOST}:8070/complaints/feedbacks/${id}`)
+      .then((res) => {
+        setfeedbacks(res.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+        showToast("Error fetching data");
+      });
+  };
+
+  //show toast message
+  const showToast = (msg) => {
+    ToastAndroid.show(msg, ToastAndroid.SHORT);
+  };
+
   useEffect(() => {
-    setfeedbacks(route.params.feedbacks);
+    getFeedbacks(route.params.complaintId);
   }, []);
 
   return (
@@ -56,8 +102,13 @@ function Feedbacks({ route }) {
         })}
       </ScrollView>
       <View style={styles.bottomContainer}>
-        <TextInput style={styles.input} placeholder="Type here..." />
-        <TouchableNativeFeedback>
+        <TextInput
+          style={styles.input}
+          placeholder="Type here..."
+          value={reply}
+          onChangeText={setreply}
+        />
+        <TouchableNativeFeedback onPress={submitReply}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Feather
               name="send"

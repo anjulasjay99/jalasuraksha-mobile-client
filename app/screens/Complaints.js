@@ -9,18 +9,67 @@ import {
   RefreshControl,
   TextInput,
   TouchableNativeFeedback,
+  Pressable,
 } from "react-native";
 import { LOCALHOST } from "@env";
 import axios from "axios";
 import ComplaintCard from "../components/ComplaintCard";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import ComplaintsFilter from "../components/ComplaintsFilter";
 
 function Complaints({ navigation }) {
   const [refreshing, setrefreshing] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [pendingComplaints, setpendingComplaints] = useState([]);
   const [resolvedComplaints, setresolvedComplaints] = useState([]);
+  const [filterVisible, setfilterVisible] = useState(false);
+  const [data, setdata] = useState([]);
+
+  //show/ hide filter bottom sheet
+  const toggleFilter = () => {
+    setfilterVisible(!filterVisible);
+  };
+
+  //filter complaints
+  const filterData = (filter) => {
+    let filteredArray = [];
+    //filter by date
+    if (filter.startDate !== "" && filter.endDate !== "") {
+      data.map((d) => {
+        const date = new Date(d.dateOfComplaint);
+        const startDate = new Date(filter.startDate);
+        const endDate = new Date(filter.endDate);
+
+        if (date > startDate && date < endDate) {
+          filteredArray.push(d);
+        }
+      });
+    } else {
+      filteredArray = data;
+    }
+
+    //filter by status
+    if (filter.status === "Pending") {
+      let arr = [];
+      filteredArray.map((d) => {
+        if (d.status === "Pending") {
+          arr.push(d);
+        }
+      });
+      filteredArray = arr;
+    } else if (filter.status === "Resolved") {
+      let arr = [];
+      filteredArray.map((d) => {
+        if (d.status === "Resolved") {
+          arr.push(d);
+        }
+      });
+      filteredArray = arr;
+    }
+
+    checkComplaintStatus(filteredArray);
+  };
 
   //fetch all complaints
   const getComplaints = () => {
@@ -28,6 +77,7 @@ function Complaints({ navigation }) {
     axios
       .get(`http://${LOCALHOST}:8070/complaints/anjulasjay@gmail.com`)
       .then((res) => {
+        setdata(res.data.data);
         checkComplaintStatus(res.data.data);
         setrefreshing(false);
       })
@@ -38,6 +88,7 @@ function Complaints({ navigation }) {
       });
   };
 
+  //check the status of complaints and put them in different arrays
   const checkComplaintStatus = (data) => {
     let pendingArr = [];
     let resolvedArr = [];
@@ -64,14 +115,24 @@ function Complaints({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchWrapper}>
-        <Ionicons name="search" size={18} color="#A4A4A4" />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search here..."
-          value={searchText}
-          onChangeText={setsearchText}
-        />
+      <View style={styles.header}>
+        <View style={styles.searchWrapper}>
+          <Ionicons name="search" size={18} color="#A4A4A4" />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search here..."
+            value={searchText}
+            onChangeText={setsearchText}
+          />
+        </View>
+        <Pressable style={styles.btnFilter} onPress={toggleFilter}>
+          <Ionicons
+            name="ios-filter"
+            size={24}
+            color="black"
+            style={{ marginTop: -15 }}
+          />
+        </Pressable>
       </View>
 
       <ScrollView
@@ -151,6 +212,15 @@ function Complaints({ navigation }) {
           <FontAwesome5 name="plus" size={24} color="white" />
         </View>
       </TouchableNativeFeedback>
+      {filterVisible ? (
+        <ComplaintsFilter
+          onBackdropClick={toggleFilter}
+          onChangeFilter={filterData}
+        />
+      ) : (
+        ""
+      )}
+
       <StatusBar style="auto" />
     </View>
   );
@@ -174,7 +244,12 @@ const styles = StyleSheet.create({
   scrollViewStyle: {
     alignContent: "center",
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   searchWrapper: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     height: 40,
@@ -230,6 +305,12 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
+  },
+  btnFilter: {
+    flexDirection: "column",
+    justifyContent: "center",
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 
