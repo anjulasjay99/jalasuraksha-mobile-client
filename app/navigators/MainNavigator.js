@@ -6,6 +6,8 @@ import NewComplaint from "../screens/NewComplaint";
 import Success from "../screens/Success";
 import ViewComplaint from "../screens/ViewComplaint";
 import Feedbacks from "../screens/Feedbacks";
+import DonateSuccess from "../screens/DonateSuccess";
+import AddDonar from "../screens/AddDonar";
 
 //create a stack navigator
 const Stack = createNativeStackNavigator();
@@ -49,6 +51,23 @@ export default function MainNavigator() {
         component={Feedbacks}
         options={headerOptions}
       />
+       <Stack.Screen
+        name="AddFunds"
+        component={AddFunds}
+        options={headerOptions}
+      />
+       <Stack.Screen
+        name="DonateSuccess"
+        component={DonateSuccess}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="AddDonar"
+        component={AddDonar}
+        options={headerOptions}
+      />
+      
+      
     </Stack.Navigator>
   );
 }
