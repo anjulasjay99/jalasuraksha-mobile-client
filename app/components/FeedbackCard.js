@@ -32,7 +32,7 @@ function FeedbackCard({ navigation, feedback, feedbacks, complaintId }) {
             source={require("../assets/user.png")}
             style={styles.profilePhoto}
           />
-          <View>
+          <View style={{ flex: 0.7 }}>
             <Text style={styles.msg} numberOfLines={1}>
               {feedback.message}
             </Text>

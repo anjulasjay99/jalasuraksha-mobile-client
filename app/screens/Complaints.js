@@ -75,7 +75,9 @@ function Complaints({ navigation }) {
   const getComplaints = () => {
     setrefreshing(true);
     axios
-      .get(`http://${LOCALHOST}:8070/complaints/anjulasjay@gmail.com`)
+      .get(
+        `https://jalasuraksha-backend.herokuapp.com/complaints/anjulasjay@gmail.com`
+      )
       .then((res) => {
         setdata(res.data.data);
         checkComplaintStatus(res.data.data);
