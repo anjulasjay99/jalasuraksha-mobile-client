@@ -34,7 +34,9 @@ function ViewComplaint({ navigation, route }) {
 
   const resolve = () => {
     axios
-      .post(`http://${LOCALHOST}:8070/complaints/resolve/${complaintId}`)
+      .post(
+        `https://jalasuraksha-backend.herokuapp.com/complaints/resolve/${complaintId}`
+      )
       .then((res) => {
         if (res.data.success) {
           showToast("Complaint resolved");
