@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet  } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableNativeFeedback,
+  Alert,
+  ToastAndroid,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import FeedbackCard from "../components/FeedbackCard";
+import { FontAwesome5 } from "@expo/vector-icons";
+import axios from "axios";
+import { LOCALHOST } from "@env";
 
 function ViewComplaint({ navigation, route }) {
   const [complaintId, setcomplaintId] = useState("");
@@ -12,6 +22,59 @@ function ViewComplaint({ navigation, route }) {
   const [gnd, setgnd] = useState("");
   const [description, setdescription] = useState("");
   const [feedbacks, setfeedbacks] = useState([]);
+  const [status, setstatus] = useState("");
+
+  const sortFeedbacks = (feedbacksArray) => {
+    feedbacksArray.sort(function (a, b) {
+      return new Date(b.dateOfFeedback) - new Date(a.dateOfFeedback);
+    });
+
+    setfeedbacks(feedbacksArray);
+  };
+
+  const resolve = () => {
+    axios
+      .post(
+        `https://jalasuraksha-backend.herokuapp.com/complaints/resolve/${complaintId}`
+      )
+      .then((res) => {
+        if (res.data.success) {
+          showToast("Complaint resolved");
+          navigation.navigate("Complaints");
+        } else {
+          showToast("Error!");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        showToast("Error!");
+      });
+  };
+
+  //show alert
+  const showAlert = () => {
+    Alert.alert(
+      "Resolve Complaint",
+      "Are you sure you want to resolve this complaint?",
+      [
+        {
+          text: "Yes",
+          onPress: resolve,
+        },
+        {
+          text: "No",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  //show toast message
+  const showToast = (msg) => {
+    ToastAndroid.show(msg, ToastAndroid.SHORT);
+  };
 
   useEffect(() => {
     setcomplaintId(route.params.complaint.complaintId);
@@ -21,7 +84,8 @@ function ViewComplaint({ navigation, route }) {
     setdivision(route.params.complaint.division);
     setgnd(route.params.complaint.gnd);
     setdescription(route.params.complaint.description);
-    setfeedbacks(route.params.complaint.feedbacks);
+    setstatus(route.params.complaint.status);
+    sortFeedbacks(route.params.complaint.feedbacks);
   }, []);
 
   return (
@@ -55,16 +119,20 @@ function ViewComplaint({ navigation, route }) {
         <View style={styles.separator} />
         <View style={styles.row}>
           <Text style={[styles.label, { color: "#A4A4A4" }]}>Feedbacks</Text>
-          <View style={styles.fdCount}>
+          <View
+            style={feedbacks.length > 0 ? styles.fdCount : styles.fdCountZero}
+          >
             <Text style={styles.fdCountTxt}>{feedbacks.length}</Text>
           </View>
         </View>
-        {feedbacks.reverse().map((fdbk, index) => {
+        {feedbacks.map((fdbk, index) => {
           if (index === 0) {
+            console.log(fdbk);
             return (
               <FeedbackCard
                 feedback={fdbk}
                 feedbacks={feedbacks}
+                complaintId={complaintId}
                 navigation={navigation}
                 key={index}
               />
@@ -72,6 +140,16 @@ function ViewComplaint({ navigation, route }) {
           }
         })}
       </ScrollView>
+      {status === "Pending" ? (
+        <TouchableNativeFeedback onPress={showAlert}>
+          <View style={styles.btnResolve}>
+            <FontAwesome5 name="check" size={24} color="white" />
+            <Text style={styles.btnText}>Resolve</Text>
+          </View>
+        </TouchableNativeFeedback>
+      ) : (
+        ""
+      )}
     </View>
   );
 }
@@ -116,8 +194,30 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 15,
   },
+  fdCountZero: {
+    backgroundColor: "grey",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 30,
+    height: 30,
+    padding: 5,
+    borderRadius: 15,
+  },
   fdCountTxt: {
     color: "#fff",
+  },
+  btnResolve: {
+    backgroundColor: "#5AF24D",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: 10,
+    paddingBottom: 10,
+    alignItems: "center",
+  },
+  btnText: {
+    fontSize: 24,
+    color: "#fff",
+    marginLeft: 10,
   },
 });
 

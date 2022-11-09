@@ -13,7 +13,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import axios from "axios";
 import { LOCALHOST } from "@env";
-import { Ionicons } from "@expo/vector-icons";
 
 function NewComplaint({ navigation }) {
   const [fullName, setfullName] = useState("");
@@ -60,7 +59,7 @@ function NewComplaint({ navigation }) {
         description,
       };
       axios
-        .post(`http://192.168.8.104:8070/complaints`, data)
+        .post(`https://jalasuraksha-backend.herokuapp.com/complaints`, data)
         .then((res) => {
           showToast("Success!");
           navigation.navigate("Success", { id: res.data.data.complaintId });
@@ -216,13 +215,6 @@ function NewComplaint({ navigation }) {
           placeholderTextColor="#b5b5ba"
         />
       </ScrollView>
-      <TouchableNativeFeedback
-        onPress={() => navigation.navigate("New Complaint")}
-      >
-        <View style={styles.floatingBtn}>
-          <Ionicons name="location-outline" size={24} color="white" />
-        </View>
-      </TouchableNativeFeedback>
       <TouchableNativeFeedback onPress={submitComplaint}>
         <View style={styles.btnSubmit}>
           <Text style={styles.btnText}>Submit</Text>
