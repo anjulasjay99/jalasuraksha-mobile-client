@@ -60,7 +60,7 @@ function NewComplaint({ navigation }) {
         description,
       };
       axios
-        .post(`http://${LOCALHOST}:8070/complaints`, data)
+        .post(`http://192.168.8.104:8070/complaints`, data)
         .then((res) => {
           showToast("Success!");
           navigation.navigate("Success", { id: res.data.data.complaintId });

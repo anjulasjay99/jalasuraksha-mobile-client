@@ -26,7 +26,7 @@ function Complaints({ navigation }) {
   const getComplaints = () => {
     setrefreshing(true);
     axios
-      .get(`http://${LOCALHOST}:8070/complaints/anjulasjay@gmail.com`)
+      .get(`http://192.168.8.104:8070/complaints/anjulasjay@gmail.com`)
       .then((res) => {
         checkComplaintStatus(res.data.data);
         setrefreshing(false);
