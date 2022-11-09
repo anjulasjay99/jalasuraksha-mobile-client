@@ -25,7 +25,10 @@ function Feedbacks({ route }) {
         message: reply,
       };
       axios
-        .post(`http://${LOCALHOST}:8070/complaints/reply/${complaintId}`, data)
+        .post(
+          `https://jalasuraksha-backend.herokuapp.com/complaints/reply/${complaintId}`,
+          data
+        )
         .then((res) => {
           console.log(res.data.data);
           if (!res.data.success) {
@@ -44,7 +47,9 @@ function Feedbacks({ route }) {
 
   const getFeedbacks = (id) => {
     axios
-      .get(`http://${LOCALHOST}:8070/complaints/feedbacks/${id}`)
+      .get(
+        `https://jalasuraksha-backend.herokuapp.com/complaints/feedbacks/${id}`
+      )
       .then((res) => {
         setfeedbacks(res.data.data);
       })
