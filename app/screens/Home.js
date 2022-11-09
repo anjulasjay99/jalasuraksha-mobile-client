@@ -12,15 +12,20 @@ function Home({ navigation }) {
       <Pressable onPress={() => navigation.navigate("AddFunds")}>
         <Text style={{ color: "blue" }}>AddFunds</Text>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate("DonateSuccess")}>
-        <Text style={{ color: "blue" }}>DonateSuccess</Text>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate("DonateSuccess")}>
-        <Text style={{ color: "blue" }}>DonateSuccess</Text>
-      </Pressable>
+     
       <Pressable onPress={() => navigation.navigate("AddDonar")}>
         <Text style={{ color: "blue" }}>AddDonar</Text>
       </Pressable>
+      <Pressable onPress={() => navigation.navigate("PaymentOption")}>
+        <Text style={{ color: "blue" }}>PaymentOption</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate("ViewFunds")}>
+        <Text style={{ color: "blue" }}>ViewFunds</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate("ViewDonars")}>
+        <Text style={{ color: "blue" }}>ViewDonars</Text>
+      </Pressable>
+     
       <StatusBar style="auto" />
     </View>
   );

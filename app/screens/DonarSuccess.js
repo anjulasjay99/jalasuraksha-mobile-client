@@ -2,19 +2,19 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export const DonateSuccess = ({navigation}) => {
+export const DonarSuccess = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Ionicons name="checkmark-circle-sharp" size={200} color="#35D627" />
-      <Text style={styles.heading}>Thank You For</Text>
-      <Text style={styles.heading}>Donation!</Text>
+      <Text style={styles.heading}>Donar Added </Text>
+      <Text style={styles.heading}>Successfully!</Text>
       
       
       <TouchableNativeFeedback
         onPress={() => navigation.navigate("ViewFunds")}
       >
         <View style={styles.btn}>
-          <Text style={styles.btnText}>View Your Donates</Text>
+          <Text style={styles.btnText}>View All Donars</Text>
         </View>
       </TouchableNativeFeedback>
     </View>
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
     },
   });
   
-  export default DonateSuccess;
+  export default DonarSuccess;

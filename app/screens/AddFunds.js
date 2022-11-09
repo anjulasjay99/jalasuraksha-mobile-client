@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet,Keyboard, Text, View ,ScrollView, Image,TextInput,Button, TouchableNativeFeedback} from "react-native";
+import { StyleSheet,Alert, ToastAndroid,Text, View ,ScrollView, Image,TextInput,Button, TouchableNativeFeedback} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
+import axios from "axios";
 function AddFunds({ navigation }) {
 
   const [categoryOpen, setcategoryOpen] = useState(false);
@@ -10,14 +11,72 @@ function AddFunds({ navigation }) {
   const [selectedCategory, setselectedCategory] = useState(null);
   const [selectepaymenet, setselectepaymenet] = useState(null);
   const [categories, setcategories] = useState([
-    { label: "Water Quality", value: "Water Quality" },
-    { label: "Water Supply", value: "Water Supply" },
+    { label: "WaterRes", value: "WaterRes" },
+    { label: "JalaSuratha", value: "JalaSuratha" },
   ]);
   const [paymentoption, setpaymentoption] = useState([
-    { label: "Option 1", value: "Water Quality" },
-    { label: "Option 2", value: "Water Supply" },
-    { label: "Option 3", value: "Water Suppl" },
+    { label: "Option 1", value: "Option1" },
+    { label: "Option 2", value: "Option2" },
+    { label: "Option 3", value: "Option3" },
   ]);
+  const [amount,setamount] = useState(0);
+
+  const submitFunds = () => {
+    if (
+  
+      amount !== 0 &&
+      selectedCategory !== null &&
+      selectepaymenet !== null 
+    ) 
+    {
+      const data = {
+        option: selectepaymenet,
+        project: selectedCategory,
+        amount,
+       
+      };
+      console.log(data)
+      axios
+        .post(`https://jalasuraksha-backend.herokuapp.com/donations/funds/add`, data)
+        .then((res) => {
+          console.log(res)
+          showToast("Success!");
+          navigation.navigate("DonateSuccess");
+          setamount(0);
+        })
+        .catch((err) => {
+          console.error(err);
+          showAlert("An unexpected error occurred. Try again later.");
+          setamount(0);
+        });
+    } else {
+      showToast("Please provide all the details!");
+    }
+  };
+
+  //show alert
+  const showAlert = (msg) => {
+    Alert.alert(
+      "New Complaint",
+      msg,
+      [
+        {
+          text: "Cancel",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  //show toast message
+  const showToast = (msg) => {
+    ToastAndroid.show(msg, ToastAndroid.SHORT);
+  };
+
+
+
   return (
     <View style={styles.container}>
       
@@ -52,6 +111,8 @@ function AddFunds({ navigation }) {
               style={styles.input}    
               placeholder="Enter Amount"
               showSoftInputOnFocus={false}
+              value={amount}
+              onChangeText={setamount}
             />  
             <Text style= {styles.text}>Payment Option</Text>
             <DropDownPicker
@@ -71,9 +132,9 @@ function AddFunds({ navigation }) {
                 listItemLabelStyle={styles.dropDownLabel}
                 placeholderStyle={styles.dropDownPlaceholder}
               />
-            <TouchableNativeFeedback  style={styles.btn}>
+            <TouchableNativeFeedback  >
             <View style={styles.btnSubmit}>
-            <Button title="Submit" onPress={() => submit()} />
+            <Button title="Submit" onPress={submitFunds} />
               
             </View>
            </TouchableNativeFeedback>
@@ -180,21 +241,5 @@ const styles = StyleSheet.create({
   },
 
 });
-const InitWindowStyles = StyleSheet.create({
-  root: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  rowContainer: {
-    flex: 1, 
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  text: {
-    flex: 1,
-    marginTop: 5,
-  },
- 
-})
+
 export default AddFunds;

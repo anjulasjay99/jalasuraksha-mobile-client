@@ -8,6 +8,12 @@ import ViewComplaint from "../screens/ViewComplaint";
 import Feedbacks from "../screens/Feedbacks";
 import DonateSuccess from "../screens/DonateSuccess";
 import AddDonar from "../screens/AddDonar";
+import  { PaymentOption } from "../screens/paymentOption";
+import ViewFunds from "../screens/viewFunds";
+import DonarSuccess from "../screens/DonarSuccess";
+import ViewDonars from "../screens/ViewDonars";
+import PaymentSuccess from "../screens/PaymentSuccess";
+
 
 //create a stack navigator
 const Stack = createNativeStackNavigator();
@@ -66,8 +72,32 @@ export default function MainNavigator() {
         component={AddDonar}
         options={headerOptions}
       />
-      
-      
+      <Stack.Screen
+        name="PaymentOption"
+        component={PaymentOption}
+        options={headerOptions}
+      />
+       <Stack.Screen
+        name="ViewFunds"
+        component={ViewFunds}
+        options={headerOptions}
+      />
+         <Stack.Screen
+        name="DonarSuccess"
+        component={DonarSuccess}
+        options={headerOptions}
+      />
+         <Stack.Screen
+        name="ViewDonars"
+        component={ViewDonars}
+        options={headerOptions}
+      />
+
+      <Stack.Screen
+        name="PaymentSuccess"
+        component={PaymentSuccess}
+        options={headerOptions}
+      />
     </Stack.Navigator>
   );
 }
