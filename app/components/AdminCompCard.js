@@ -16,7 +16,9 @@ import { AntDesign } from '@expo/vector-icons';
 function AdminCompCard({ navigation , complaint }){
 
     const [modalVisible, setModalVisible] = useState(true);
-
+   
+    const [feedback , setFeedback ] = useState(complaint.feedbacks[0]);
+  //  console.log(feedback.message);
     function leaveFeedback(){
         navigation.navigate("Leave Feedback" , { complaint });
     }
@@ -26,7 +28,6 @@ function AdminCompCard({ navigation , complaint }){
             <View style={styles.container}>
                 <TouchableHighlight onPress={()=>{setModalVisible(!modalVisible)}} >
                 <View style={styles.cardDetail}>
-                    {/* Icon */}
                     {
                     complaint.feedbacks === undefined || complaint.feedbacks.lenght == 0 ? 
                     (
@@ -64,7 +65,7 @@ function AdminCompCard({ navigation , complaint }){
         <Modal
             animationType="slide"
             transparent={true}
-            visible={false}
+            visible={true}
             onRequestClose={() =>{
                 Alert.alert("Modal has been closed.");
                 setModalVisible(!modalVisible);
@@ -105,19 +106,19 @@ function AdminCompCard({ navigation , complaint }){
                 </View>   
                 <View style={styles.separator} />      
                 <View style={styles.row}>
-                        <Text style={[styles.label, { color: "#A4A4A4" }]}>Feedbacks</Text>
+                        <Text style={[styles.label, { color: "#676262" }]}>Feedbacks</Text>
                         <View>
-                            <Text>Icon</Text>
+                          <AntDesign name="infocirlceo" size={26} color="black" />
                         </View>
 
                 </View>   
-                <View><Text>Feedback Here</Text></View>
-                <TouchableNativeFeedback onPress={leaveFeedback}>
-                    <View style={styles.btnSubmit}>
-                        <Text style={styles.btnText}>Submit</Text>
-                        <FontAwesome name="long-arrow-right" size={24} color="black" />
-                    </View>
-                </TouchableNativeFeedback>
+                <View style ={styles.feedback}>
+                  {/* <Text>{complaint.feedbacks}</Text> */}
+                  <TouchableNativeFeedback onPress={leaveFeedback}>               
+                    <AntDesign name="rightcircle" size={24} color="#222222"  />
+                  </TouchableNativeFeedback>
+                </View>
+  
             </View>
 
         </View>
@@ -176,17 +177,19 @@ const styles = StyleSheet.create({
     },
     centeredView: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent:"flex-end",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 40,
+        
       },
       modalView: {
         width : "100%",
-        height: "100%",
-        margin: 20,
+        height: "82%",
+        
         backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
+        borderTopEndRadius: 20,
+        borderTopLeftRadius:20,
+        padding: 18,
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -194,7 +197,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
+        backgroundColor: "#9FC8DF"
       },
       complaintTitle:{
         alignItems:"center",
@@ -208,14 +212,17 @@ const styles = StyleSheet.create({
       },  
       label: {
         fontSize: 20,
-        color: "black",
+        color: "#3E3E3E",
+        fontWeight:"700"
       },
       value: {
         fontSize: 20,
-        color: "#8F8E8E",
+        color: "#3A3838",
+        fontWeight:"500"
+        
       },  
       separator: {
-        height: 1,
+        height: 4,
         backgroundColor: "#A4A4A4",
         marginTop: 20,
         marginBottom: 10,
@@ -258,6 +265,24 @@ const styles = StyleSheet.create({
       arrowIcon:{
         marginTop:20,
         marginLeft:70,
+      },
+      feedback:{
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"center",
+        width : "100%",
+        backgroundColor:"#DCD6D6",
+        borderRadius:5,
+        paddingTop:15,
+        paddingBottom:15,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        elevation: 3,
       }
 })
 

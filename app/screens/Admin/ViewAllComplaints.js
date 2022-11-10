@@ -7,6 +7,7 @@ import {
     ScrollView,
     RefreshControl,
     TextInput,
+    Pressable,
     TouchableNativeFeedback,
   } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -36,6 +37,10 @@ function ViewAllComplaints({navigation}){
         });
     }
 
+    const toggleFilter = () => {
+        navigation.navigate('Filter Complaints')
+      };
+
     useEffect(()=>{
         getComplaints();
     },[]);
@@ -43,15 +48,25 @@ function ViewAllComplaints({navigation}){
 
     return(
         <View style={styles.container}>
-            <View style={styles.searchWrapper}>
-                <Ionicons name="search" size={18} color="#A4A4A4" />
-                <TextInput
-                style={styles.searchInput}
-                placeholder="Search complaint #"
-                value={searchText}
-                onChangeText={setsearchText}
-                />  
-            </View>
+            <View style={styles.header}>
+                <View style={styles.searchWrapper}>
+                    <Ionicons name="search" size={18} color="#A4A4A4" />
+                    <TextInput
+                    style={styles.searchInput}
+                    placeholder="Search complaint #"
+                    value={searchText}
+                    onChangeText={setsearchText}
+                    />  
+                </View>
+                <Pressable style={styles.btnFilter} onPress={toggleFilter}>
+                        <Ionicons
+                        name="ios-filter"
+                        size={24}
+                        color="black"
+                        style={{ marginTop: -15 }}
+                        />
+                </Pressable>
+            </View>    
             <View style={styles.unreadChip}>
                 <Text style={styles.unreadText}> 2 Unread</Text>
             </View>
@@ -121,6 +136,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: "#F3F1F1",
         padding: 10,
+        width:"88%",
+        marginRight : 7
       },
       searchInput: {
         height: 30,
@@ -130,6 +147,10 @@ const styles = StyleSheet.create({
       },
       unreadText: {
         color: "white",
+      },
+      header: {
+        flexDirection: "row",
+        alignItems: "center",
       }
 })
 
