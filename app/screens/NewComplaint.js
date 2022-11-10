@@ -59,7 +59,7 @@ function NewComplaint({ navigation }) {
         description,
       };
       axios
-        .post(`http://${LOCALHOST}:8070/complaints`, data)
+        .post(`https://jalasuraksha-backend.herokuapp.com/complaints`, data)
         .then((res) => {
           showToast("Success!");
           navigation.navigate("Success", { id: res.data.data.complaintId });

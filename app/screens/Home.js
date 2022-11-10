@@ -9,6 +9,9 @@ function Home({ navigation }) {
       <Pressable onPress={() => navigation.navigate("Complaints")}>
         <Text style={{ color: "blue" }}>Complaints</Text>
       </Pressable>
+      <Pressable onPress={() => navigation.navigate("Admin View Complaints")}>
+        <Text style={{ color: "blue" }}>Admin Complaints</Text>
+      </Pressable>
       <StatusBar style="auto" />
     </View>
   );
