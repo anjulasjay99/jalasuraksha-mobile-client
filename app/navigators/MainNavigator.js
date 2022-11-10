@@ -5,6 +5,7 @@ import NewComplaint from "../screens/NewComplaint";
 import Success from "../screens/Success";
 import ViewComplaint from "../screens/ViewComplaint";
 import Feedbacks from "../screens/Feedbacks";
+import Map from "../screens/Map";
 
 //create a stack navigator
 const Stack = createNativeStackNavigator();
@@ -33,6 +34,7 @@ export default function MainNavigator() {
         component={NewComplaint}
         options={headerOptions}
       />
+      <Stack.Screen name="Map" component={Map} options={headerOptions} />
       <Stack.Screen
         name="Success"
         component={Success}

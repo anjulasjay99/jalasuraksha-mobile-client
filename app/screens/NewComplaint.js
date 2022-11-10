@@ -10,6 +10,7 @@ import {
   ToastAndroid,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import axios from "axios";
 import { LOCALHOST } from "@env";
@@ -215,6 +216,11 @@ function NewComplaint({ navigation }) {
           placeholderTextColor="#b5b5ba"
         />
       </ScrollView>
+      <TouchableNativeFeedback onPress={() => navigation.navigate("Map")}>
+        <View style={styles.floatingBtn}>
+          <Ionicons name="location-outline" size={24} color="white" />
+        </View>
+      </TouchableNativeFeedback>
       <TouchableNativeFeedback onPress={submitComplaint}>
         <View style={styles.btnSubmit}>
           <Text style={styles.btnText}>Submit</Text>
