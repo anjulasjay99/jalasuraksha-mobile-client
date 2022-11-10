@@ -34,7 +34,7 @@ function SubmitFeedback({route}){
     return(
         <View style={styles.container}>
             <View style={styles.complaintTitle}>
-                <Text>{complaintId}</Text>
+                <Text style={styles.complaintText}>{complaintId}</Text>
             </View>
             <View style={styles.feedbackContainer}>
                 <TextInput
@@ -65,22 +65,23 @@ const styles = StyleSheet.create({
     complaintTitle:{
         alignItems:"center",
         marginBottom:20,
-        marginTop:10
+        marginTop:30
     },
     feedbackContainer:{
         height:"80%",
         alignItems:"center",
-        justifyContent:"center"
+        marginLeft:10,
+        marginRight:10
     },
     feedbackDesc:{
         backgroundColor: "#F3F1F1",
-        height: "60%",
+        height: "40%",
         width: "100%",
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 15,
         fontSize: 18,
         marginBottom: 10,
-        color: "#4A4A4A",
+        color: "#4A4A4A"
     },
     submitBtn:{
         backgroundColor: "#2AB9FE",
@@ -94,6 +95,11 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: "#fff",
         marginRight: 10,
+    },
+    complaintText: {
+        fontSize: 20,
+        color: "black",
+        fontWeight: "700"
     }
 })
 export default SubmitFeedback;

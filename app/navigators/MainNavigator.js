@@ -7,6 +7,7 @@ import ViewComplaint from "../screens/ViewComplaint";
 import Feedbacks from "../screens/Feedbacks";
 import ViewAllComplaints from "../screens/Admin/ViewAllComplaints";
 import SubmitFeedback from "../screens/Admin/SubmitFeedback";
+import AdminComplaintsFilter from "../components/AdminComplaintsFilter";
 //create a stack navigator
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,11 @@ export default function MainNavigator() {
       <Stack.Screen
         name="Leave Feedback"
         component={SubmitFeedback}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Filter Complaints"
+        component={AdminComplaintsFilter}
         options={headerOptions}
       />
     </Stack.Navigator>
