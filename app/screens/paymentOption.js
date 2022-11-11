@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { EvilIcons } from '@expo/vector-icons'; 
 import axios from "axios";
 //import DatePicker from 'react-native-datepicker';
-import DatePicker from 'react-native-date-picker'
+import DatePicker from "react-native-date-ranges";
 export const PaymentOption = ({navigation}) => {
 
   
@@ -14,9 +14,12 @@ export const PaymentOption = ({navigation}) => {
   const [cvv,setcvv] = useState("");
   const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
-
+  const [birthday, setBirthday] = useState(new Date());
+  
 
   const submitPayment = () => {
+    console.log(fullName)
+    console.log(exp)
     if (
   
       fullName !== "" &&
@@ -38,7 +41,7 @@ export const PaymentOption = ({navigation}) => {
         .then((res) => {
           console.log(res)
           showToast("Payment Added Successfully!");
-          navigation.navigate("PaymentSuccess");
+          navigation.navigate("Payment Success");
           setfullName("");
           setcardNo("");
           setexp("");
@@ -78,7 +81,11 @@ export const PaymentOption = ({navigation}) => {
     ToastAndroid.show(msg, ToastAndroid.SHORT);
   };
 
-
+  const onConfirmDate = (date) => {
+    console.log(date)
+    console.log(date.currentDate)
+     setexp(date.currentDate)
+  };
 
 
   return (
@@ -105,7 +112,7 @@ export const PaymentOption = ({navigation}) => {
               
           />
           
-          <View style={{marginLeft:180}}>
+          <View style={{position:'absolute',right:10,top:2}}>
           <EvilIcons name="credit-card" size={24} color="black"  />
           </View> 
           </View> 
@@ -116,15 +123,36 @@ export const PaymentOption = ({navigation}) => {
           <Text style= {styles.textCvv} >CVV</Text>  
           </View>
           <View style={styles.row}>
+          <DatePicker
+              style={styles.expDate}
+                
+              customStyles={{
+                placeholderText:{ fontSize:15,color: "#4A4A4A" }, // placeHolder style
+                headerStyle : {},			// title container style
+                headerMarkTitle : {}, // title mark style
+                headerDateTitle: {}, // title Date style
+                contentInput: {}, //content text container style
+                contentText: {}, //after selected text Style
+                
+                
+              }} // optional
+              centerAlign={false} // optional text will align center or not
+              allowFontScaling = {false} // optional
+              placeholder={'Select Exp Date'}
+              onConfirm={onConfirmDate}
+              selectedTextColor="blue"
+              outFormat="YYYY-MM-DD"
+            
+            />
              
-             <TextInput
+             {/* <TextInput
               style={styles.expDate}    
               placeholder="Exp Date"
               showSoftInputOnFocus={false}
               value={exp}
               onChangeText={setexp}
             />  
-            
+             */}
               <TextInput
               style={styles.cvv}    
               placeholder="CVV"
@@ -140,6 +168,10 @@ export const PaymentOption = ({navigation}) => {
            </TouchableNativeFeedback>
            <Text style= {styles.vefifytext} >You verify that this info is correct</Text>
            </ScrollView>
+           <View style={{ 
+    fontSize: 18 }}>
+      
+    </View>
            
            
     </View>
@@ -194,9 +226,9 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     marginTop:30,
-    fontSize:15,
+    fontSize:20,
     borderWidth: 2,
-    padding: 10,
+    padding: 12,
     borderRadius: 12,
     borderColor: 'grey',
     flexDirection:'row'
@@ -207,9 +239,10 @@ const styles = StyleSheet.create({
     width:'48%',
     marginTop:20,
    
-    fontSize:15,
+    fontSize:20,
     borderWidth: 2,
-    padding: 10,
+    paddingTop:12,
+    paddingRight:40,
     borderRadius: 12,
     borderColor: 'grey',
     flexDirection:'row'
@@ -220,7 +253,7 @@ const styles = StyleSheet.create({
     width:'48%',
     marginTop:20,
     marginLeft:15,
-    fontSize:15,
+    fontSize:20,
     borderWidth: 2,
     padding: 10,
     borderRadius: 12,
@@ -231,13 +264,13 @@ text:{
   flex: 1,
   backgroundColor: 'white', 
   marginTop:20,
-  fontSize: 16
+  fontSize: 18
 },
 textCvv:{
   flex: 1,
   backgroundColor: 'white', 
   marginTop:20,
-  fontSize: 16,
+  fontSize: 18,
   marginLeft:20
 },
   header:{
@@ -258,7 +291,7 @@ textCvv:{
     borderWidth: 2,
   },
   creditCardIcon: {
-    fontSize: 16,padding: 0,
+    fontSize: 20,padding: 0,
   },
   icon:{
     alignSelf:'center'

@@ -11,7 +11,7 @@ export const DonarSuccess = ({navigation}) => {
       
       
       <TouchableNativeFeedback
-        onPress={() => navigation.navigate("ViewDonars")}
+        onPress={() => navigation.navigate("View Donars")}
       >
         <View style={styles.btn}>
           <Text style={styles.btnText}>View All Donars</Text>

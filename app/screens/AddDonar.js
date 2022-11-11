@@ -31,7 +31,7 @@ const AddDonar = ({ navigation }) => {
         .then((res) => {
           console.log(res)
           showToast("Donar Added Successfully!");
-          navigation.navigate("DonarSuccess");
+          navigation.navigate("Donar Success");
           setfirstName("");
           setlastName("");
           setamount(0);
@@ -107,7 +107,10 @@ const AddDonar = ({ navigation }) => {
               placeholder="Enter Contact No"
               value={telNo}
               onChangeText={settelNo}
+              keyboardType="number-pad"
               showSoftInputOnFocus={false}
+              maxLength={10}
+          
             />  
             
         </View>  
@@ -116,6 +119,7 @@ const AddDonar = ({ navigation }) => {
         <TextInput
               style={styles.input}    
               placeholder="Enter Amount"
+              keyboardType="number-pad"
               value={amount}
               onChangeText={setamount}
               showSoftInputOnFocus={false}
@@ -126,7 +130,7 @@ const AddDonar = ({ navigation }) => {
         </ScrollView>
         <TouchableNativeFeedback  >
             <View style={styles.btnSubmit}>
-            <Button title="Submit" onPress={submitDonar} />
+            <Button title="Add Donar" onPress={submitDonar} />
               
             </View>
            </TouchableNativeFeedback>

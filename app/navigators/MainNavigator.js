@@ -64,22 +64,22 @@ export default function MainNavigator() {
         options={headerOptions}
       />
        <Stack.Screen
-        name="AddFunds"
+        name="Add Funds"
         component={AddFunds}
         options={headerOptions}
       />
        <Stack.Screen
-        name="DonateSuccess"
+        name="Donation Success"
         component={DonateSuccess}
         options={headerOptions}
       />
       <Stack.Screen
-        name="AddDonar"
+        name="New Donar"
         component={AddDonar}
         options={headerOptions}
       />
       <Stack.Screen
-        name="PaymentOption"
+        name="Payment Option"
         component={PaymentOption}
         options={headerOptions}
       />
@@ -89,18 +89,18 @@ export default function MainNavigator() {
         options={headerOptions}
       />
          <Stack.Screen
-        name="DonarSuccess"
+        name="Donar Success"
         component={DonarSuccess}
         options={headerOptions}
       />
          <Stack.Screen
-        name="ViewDonars"
+        name="View Donars"
         component={ViewDonars}
         options={headerOptions}
       />
 
       <Stack.Screen
-        name="PaymentSuccess"
+        name="Payment Success"
         component={PaymentSuccess}
         options={headerOptions}
       />

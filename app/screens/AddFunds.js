@@ -42,7 +42,7 @@ function AddFunds({ navigation }) {
         .then((res) => {
           console.log(res)
           showToast("Success!");
-          navigation.navigate("DonateSuccess");
+          navigation.navigate("Donation Success");
           setamount(0);
         })
         .catch((err) => {
@@ -114,6 +114,7 @@ function AddFunds({ navigation }) {
               showSoftInputOnFocus={false}
               value={amount}
               onChangeText={setamount}
+              keyboardType="number-pad"
             />  
             <Text style= {styles.text}>Payment Option</Text>
             <DropDownPicker
@@ -135,7 +136,7 @@ function AddFunds({ navigation }) {
               />
             <TouchableNativeFeedback  >
             <View style={styles.btnSubmit}>
-            <Button title="Add Donar" onPress={submitFunds} />
+            <Button title="Add Donation" onPress={submitFunds} />
               
             </View>
            </TouchableNativeFeedback>
@@ -181,12 +182,12 @@ const styles = StyleSheet.create({
   text:{
     flex: 1,
     backgroundColor: 'white', 
-    marginTop:10,
+    marginTop:15,
     fontSize: 16
   },
   input: {
     height: 50,
-    marginTop: 10,
+    marginTop: 15,
     fontSize:15,
     borderWidth: 2,
     padding: 10,
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    elevation: 1,
+    elevation: 3,
   },
   dropDownSelected: {
     color: "#2AB9FE",
