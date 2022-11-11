@@ -86,6 +86,9 @@ export const PaymentOption = ({navigation}) => {
     console.log(date.currentDate)
      setexp(date.currentDate)
   };
+  const dateConfirmBtn = (onSet) => {
+    return <Button onPress={onSet} title={"Set Exp Date"} />;
+  };
 
 
   return (
@@ -108,8 +111,8 @@ export const PaymentOption = ({navigation}) => {
           <TextInput style={styles.creditCardIcon}
           placeholder="1234 1234 1234"
           value={cardNo}
-              onChangeText={setcardNo}
-              
+          onChangeText={setcardNo}
+          maxLength={10}    
           />
           
           <View style={{position:'absolute',right:10,top:2}}>
@@ -142,7 +145,7 @@ export const PaymentOption = ({navigation}) => {
               onConfirm={onConfirmDate}
               selectedTextColor="blue"
               outFormat="YYYY-MM-DD"
-            
+              customButton={dateConfirmBtn}
             />
              
              {/* <TextInput
