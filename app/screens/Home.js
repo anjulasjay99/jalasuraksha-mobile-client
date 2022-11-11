@@ -28,6 +28,9 @@ function Home({ navigation }) {
       <Pressable onPress={() => navigation.navigate("Donations")}>
         <Text style={{ color: "blue" }}>Donation</Text>
       </Pressable>
+      <Pressable onPress={() => navigation.navigate("Admin View Complaints")}>
+        <Text style={{ color: "blue" }}>Admin Complaints</Text>
+      </Pressable>
       <StatusBar style="auto" />
     </View>
   );

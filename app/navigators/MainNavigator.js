@@ -15,6 +15,10 @@ import ViewDonars from "../screens/ViewDonars";
 import PaymentSuccess from "../screens/PaymentSuccess";
 import DonationHome from "../screens/DonationHome";
 
+import Map from "../screens/Map";
+import ViewAllComplaints from "../screens/Admin/ViewAllComplaints";
+import SubmitFeedback from "../screens/Admin/SubmitFeedback";
+import AdminComplaintsFilter from "../components/AdminComplaintsFilter";
 
 //create a stack navigator
 const Stack = createNativeStackNavigator();
@@ -43,6 +47,7 @@ export default function MainNavigator() {
         component={NewComplaint}
         options={headerOptions}
       />
+      <Stack.Screen name="Map" component={Map} options={headerOptions} />
       <Stack.Screen
         name="Success"
         component={Success}
@@ -105,6 +110,21 @@ export default function MainNavigator() {
         options={headerOptions}
       />
      
+      <Stack.Screen
+        name="Admin View Complaints"
+        component={ViewAllComplaints}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Leave Feedback"
+        component={SubmitFeedback}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Filter Complaints"
+        component={AdminComplaintsFilter}
+        options={headerOptions}
+      />
     </Stack.Navigator>
   );
 }
