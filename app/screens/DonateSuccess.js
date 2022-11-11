@@ -11,7 +11,7 @@ export const DonateSuccess = ({navigation}) => {
       
       
       <TouchableNativeFeedback
-        onPress={() => navigation.navigate("ViewFunds")}
+        onPress={() => navigation.navigate("View Funds")}
       >
         <View style={styles.btn}>
           <Text style={styles.btnText}>View Your Donates</Text>

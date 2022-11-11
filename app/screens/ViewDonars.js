@@ -23,15 +23,21 @@ import ComplaintsFilter from "../components/ComplaintsFilter";
 
 const ViewDonars = ({navigation}) => {
 
+    const [refreshing, setrefreshing] = useState(false);
     const [data,setdata] = useState([]);
     const [searchText, setsearchText] = useState("");
 
-    useEffect(()=>{
+    const getDonars = ()=>{
+        setrefreshing(true);
         axios.get(`https://jalasuraksha-backend.herokuapp.com/donations/get/donars`).then((response)=>{     
             //console.log(response.data)
             setdata(response.data.data)
-            console.log(data)
+            setrefreshing(false);
         })
+
+    }
+    useEffect(()=>{
+        getDonars()
       },[])
 
 
@@ -51,7 +57,11 @@ const ViewDonars = ({navigation}) => {
     </View>
    
     {
-        <ScrollView>    
+        <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getDonars} />
+        }
+      >  
         {data.map((data)=>{
             return(
                 <View  key={data._id}>
@@ -66,7 +76,13 @@ const ViewDonars = ({navigation}) => {
         </ScrollView>
 
     }
-   
+   <TouchableNativeFeedback
+        onPress={() => navigation.navigate("AddDonar")}
+      >
+        <View style={styles.floatingBtn}>
+          <FontAwesome5 name="plus" size={24} color="white" />
+        </View>
+      </TouchableNativeFeedback>
     </View>
 
   )

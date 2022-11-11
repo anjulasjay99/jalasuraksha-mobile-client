@@ -25,14 +25,20 @@ const ViewFunds = ({navigation}) => {
 
     const [data,setdata] = useState([]);
     const [searchText, setsearchText] = useState("");
+    const [refreshing, setrefreshing] = useState(false);
 
-    useEffect(()=>{
+    const getFunds = ()=>{
+        setrefreshing(true);
         axios.get(`https://jalasuraksha-backend.herokuapp.com/donations/get/funds`).then((response)=>{     
             //console.log(response.data)
             setdata(response.data.data)
-            console.log(data)
+            setrefreshing(false);
         })
-      },[])
+    }
+
+    useEffect(()=>{
+        getFunds()
+    },[])
 
 
   return (
@@ -51,7 +57,12 @@ const ViewFunds = ({navigation}) => {
     </View>
    
     {
-        <ScrollView>    
+         <ScrollView
+         
+         refreshControl={
+           <RefreshControl refreshing={refreshing} onRefresh={getFunds} />
+         }
+       >
         {data.map((data)=>{
             return(
                 <View  key={data._id}>
@@ -64,9 +75,15 @@ const ViewFunds = ({navigation}) => {
             )
         })}
         </ScrollView>
-
+    
     }
-   
+    <TouchableNativeFeedback
+        onPress={() => navigation.navigate("AddFunds")}
+      >
+        <View style={styles.floatingBtn}>
+          <FontAwesome5 name="plus" size={24} color="white" />
+        </View>
+      </TouchableNativeFeedback>
     </View>
 
   )
@@ -115,6 +132,26 @@ const styles = StyleSheet.create({
         borderRadius:10,
         flexDirection:"row"
     },
+    floatingBtn: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: "#2AB9FE",
+        position: "absolute",
+        alignItems: "center",
+        justifyContent: "center",
+        bottom: 20,
+        right: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 1.41,
+    
+        elevation: 2,
+      },
     flatlist: {
         paddingVertical: 30,
         paddingHorizontal: 10,

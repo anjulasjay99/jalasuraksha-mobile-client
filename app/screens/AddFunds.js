@@ -11,8 +11,9 @@ function AddFunds({ navigation }) {
   const [selectedCategory, setselectedCategory] = useState(null);
   const [selectepaymenet, setselectepaymenet] = useState(null);
   const [categories, setcategories] = useState([
-    { label: "WaterRes", value: "WaterRes" },
-    { label: "JalaSuratha", value: "JalaSuratha" },
+    { label: "AIESEC", value: "AIESEC" },
+    { label: "LEO CLUB", value: "LEO CLUB" },
+    { label: "NLWA WELFARE", value: "NLWA WELFARE" },
   ]);
   const [paymentoption, setpaymentoption] = useState([
     { label: "Option 1", value: "Option1" },
@@ -87,9 +88,9 @@ function AddFunds({ navigation }) {
       <View style={styles.form}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
             
-            <Text style= {styles.text}>Project</Text>
+            <Text style= {styles.text}>Organization</Text>
                   <DropDownPicker
-                placeholder="Project"
+                placeholder="Organization"
                 open={categoryOpen}
                 value={selectedCategory}
                 items={categories}
@@ -116,7 +117,7 @@ function AddFunds({ navigation }) {
             />  
             <Text style= {styles.text}>Payment Option</Text>
             <DropDownPicker
-                placeholder="Project"
+                placeholder="Option"
                 open={paymentOpen}
                 value={selectepaymenet}
                 items={paymentoption}
@@ -134,7 +135,7 @@ function AddFunds({ navigation }) {
               />
             <TouchableNativeFeedback  >
             <View style={styles.btnSubmit}>
-            <Button title="Submit" onPress={submitFunds} />
+            <Button title="Add Donar" onPress={submitFunds} />
               
             </View>
            </TouchableNativeFeedback>

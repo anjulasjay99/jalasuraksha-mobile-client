@@ -9,7 +9,7 @@ function Home({ navigation }) {
       <Pressable onPress={() => navigation.navigate("Complaints")}>
         <Text style={{ color: "blue" }}>Complaints</Text>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate("AddFunds")}>
+      {/* <Pressable onPress={() => navigation.navigate("AddFunds")}>
         <Text style={{ color: "blue" }}>AddFunds</Text>
       </Pressable>
      
@@ -24,8 +24,10 @@ function Home({ navigation }) {
       </Pressable>
       <Pressable onPress={() => navigation.navigate("ViewDonars")}>
         <Text style={{ color: "blue" }}>ViewDonars</Text>
+      </Pressable> */}
+      <Pressable onPress={() => navigation.navigate("Donations")}>
+        <Text style={{ color: "blue" }}>Donation</Text>
       </Pressable>
-     
       <StatusBar style="auto" />
     </View>
   );

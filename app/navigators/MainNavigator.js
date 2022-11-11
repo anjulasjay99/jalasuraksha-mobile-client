@@ -13,6 +13,7 @@ import ViewFunds from "../screens/viewFunds";
 import DonarSuccess from "../screens/DonarSuccess";
 import ViewDonars from "../screens/ViewDonars";
 import PaymentSuccess from "../screens/PaymentSuccess";
+import DonationHome from "../screens/DonationHome";
 
 
 //create a stack navigator
@@ -78,7 +79,7 @@ export default function MainNavigator() {
         options={headerOptions}
       />
        <Stack.Screen
-        name="ViewFunds"
+        name="View Funds"
         component={ViewFunds}
         options={headerOptions}
       />
@@ -98,6 +99,12 @@ export default function MainNavigator() {
         component={PaymentSuccess}
         options={headerOptions}
       />
+        <Stack.Screen
+        name="Donations"
+        component={DonationHome}
+        options={headerOptions}
+      />
+     
     </Stack.Navigator>
   );
 }

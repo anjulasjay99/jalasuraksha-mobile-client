@@ -3,7 +3,8 @@ import { StyleSheet, View,Text,ToastAndroid,Alert,ScrollView,TextInput,Touchable
 import { FontAwesome } from "@expo/vector-icons";
 import { EvilIcons } from '@expo/vector-icons'; 
 import axios from "axios";
-
+//import DatePicker from 'react-native-datepicker';
+import DatePicker from 'react-native-date-picker'
 export const PaymentOption = ({navigation}) => {
 
   
@@ -11,6 +12,8 @@ export const PaymentOption = ({navigation}) => {
   const [cardNo,setcardNo] = useState("");
   const [exp,setexp] = useState("");
   const [cvv,setcvv] = useState("");
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
 
 
   const submitPayment = () => {
@@ -93,35 +96,13 @@ export const PaymentOption = ({navigation}) => {
             />  
             <Text style= {styles.text}>Credit Card Number</Text>
            
-            {/* <TextInput
-              style={styles.input}    
-              placeholder="Credit Card Number"
-              showSoftInputOnFocus={false}
-            >
-          <EvilIcons name="credit-card" size={24} color="black" style={{alignSelf:'right'}}/>
-              </TextInput>   */}
-              
-              {/* <View style={{flexDirection:'row',paddingBottom:5, borderColor:'#ccc',borderBottomWidth:1}}>
-             <TextInput 
-                  style={{flex:1}}
-                 
-                  placeholder="Password"
-                  placeholderTextColor="#ccc"
-                  autoCapitalize="none"
-                  keyboardType="default"
-                  returnKeyType="next"
-                  
-               
-                  blurOnSubmit={false}
-                ></TextInput>
-               <EvilIcons name="credit-card" size={24} color="black" style={{alignSelf:'center'}}/>
-              </View> */}
             <View style={styles.creditCardContainer}>
             <View style={styles.row}>
           <TextInput style={styles.creditCardIcon}
           placeholder="1234 1234 1234"
           value={cardNo}
               onChangeText={setcardNo}
+              
           />
           
           <View style={{marginLeft:180}}>
@@ -143,6 +124,7 @@ export const PaymentOption = ({navigation}) => {
               value={exp}
               onChangeText={setexp}
             />  
+            
               <TextInput
               style={styles.cvv}    
               placeholder="CVV"
@@ -166,6 +148,10 @@ export const PaymentOption = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+
+  datePickerStyle: {
+    width: 230,
+  },
   container: {
     padding: 0,
     backgroundColor: "#fff",
