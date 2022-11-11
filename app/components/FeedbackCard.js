@@ -7,7 +7,13 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 
-function FeedbackCard({ navigation, feedback, feedbacks, complaintId }) {
+function FeedbackCard({
+  navigation,
+  feedback,
+  feedbacks,
+  complaintId,
+  status,
+}) {
   const [daysCount, setdaysCount] = useState(0);
 
   const getDaysInBetween = (date) => {
@@ -23,7 +29,7 @@ function FeedbackCard({ navigation, feedback, feedbacks, complaintId }) {
   return (
     <TouchableNativeFeedback
       onPress={() =>
-        navigation.navigate("Feedbacks", { feedbacks, complaintId })
+        navigation.navigate("Feedbacks", { feedbacks, complaintId, status })
       }
     >
       <View style={styles.container}>
