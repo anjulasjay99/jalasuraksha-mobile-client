@@ -26,6 +26,7 @@ const ViewFunds = ({navigation}) => {
     const [data,setdata] = useState([]);
     const [searchText, setsearchText] = useState("");
     const [refreshing, setrefreshing] = useState(false);
+    
 
     const getFunds = ()=>{
         setrefreshing(true);
@@ -50,7 +51,7 @@ const ViewFunds = ({navigation}) => {
           style={styles.searchInput}
           placeholder="Search here..."
           value={searchText}
-          onChangeText={setsearchText}
+          onChangeText={(text)=>setsearchText(text) }
         />
       </View>
    
@@ -63,22 +64,38 @@ const ViewFunds = ({navigation}) => {
            <RefreshControl refreshing={refreshing} onRefresh={getFunds} />
          }
        >
-        {data.map((data)=>{
+        {
+        
+        data.map((data)=>{
+          if(searchText===""){
             return(
-                <View  key={data._id}>
-                     <View style={styles.items}>
-                    <Text style={styles.item1}>{data.project}</Text>
-                    <Text style={styles.item2}>{data.amount}</Text>
-                    <Text style={styles.item3}>{data.option}</Text>
-                    </View>
-                </View>
-            )
+              <View  key={data._id}>
+                   <View style={styles.items}>
+                  <Text style={styles.item1}>{data.project}</Text>
+                  <Text style={styles.item2}>{data.amount}</Text>
+                  <Text style={styles.item3}>{data.option}</Text>
+                  </View>
+              </View>
+          )
+
+          }
+          if(data.project.toLowerCase().includes(searchText.toLowerCase())||data.option.toLowerCase().includes(searchText.toLowerCase())){
+            return(
+              <View  key={data._id}>
+              <View style={styles.items}>
+             <Text style={styles.item1}>{data.project}</Text>
+             <Text style={styles.item2}>{data.amount}</Text>
+             <Text style={styles.item3}>{data.option}</Text>
+             </View>
+         </View>
+          )
+          }
         })}
         </ScrollView>
     
     }
     <TouchableNativeFeedback
-        onPress={() => navigation.navigate("AddFunds")}
+        onPress={() => navigation.navigate("Add Funds")}
       >
         <View style={styles.floatingBtn}>
           <FontAwesome5 name="plus" size={24} color="white" />
@@ -125,11 +142,22 @@ const styles = StyleSheet.create({
         flex:1,
         marginTop:35,
         marginBottom:20,
+        marginLeft:2,
+        marginRight:2,
         padding:30,
+        backgroundColor: "#fff",
         paddingBottom:40,
         fontsize:24,
-        borderWidth:1,
         borderRadius:10,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        elevation: 5,
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
         flexDirection:"row"
     },
     floatingBtn: {
@@ -170,8 +198,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
         flex: 1,
-        flexDirection: "column",
-      
         flexDirection: "column",
         padding: 10,
       },

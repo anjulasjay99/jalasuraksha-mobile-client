@@ -19,7 +19,7 @@ const DonationHome = ({ navigation }) => {
                 contentFontSize={ 20 }
                 titleFontSize={ 20}
                 style={ miniCardStyle }   
-                onPress={() => navigation.navigate("PaymentOption")}
+                onPress={() => navigation.navigate("Payment Option")}
               />
               <CardViewWithImage
                 withBackground={ false }
@@ -33,7 +33,7 @@ const DonationHome = ({ navigation }) => {
                 contentFontSize={ 10 }
                 titleFontSize={ 20}
                 style={ miniCardStyle }
-                onPress={() => navigation.navigate("ViewDonars")}
+                onPress={() => navigation.navigate("View Donars")}
               />
               <CardViewWithImage
                 withBackground={ false }
@@ -43,7 +43,7 @@ const DonationHome = ({ navigation }) => {
                 width={350}
                 iconHeight={ 30 }
                 iconColor={ '#ff0000' }
-                title={ 'My Donates' }
+                title={ 'My Donation' }
                 contentFontSize={ 12 }
                 titleFontSize={ 20}
                 style={ miniCardStyle }

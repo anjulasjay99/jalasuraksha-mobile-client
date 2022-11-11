@@ -26,7 +26,7 @@ const ViewDonars = ({navigation}) => {
     const [refreshing, setrefreshing] = useState(false);
     const [data,setdata] = useState([]);
     const [searchText, setsearchText] = useState("");
-
+    
     const getDonars = ()=>{
         setrefreshing(true);
         axios.get(`https://jalasuraksha-backend.herokuapp.com/donations/get/donars`).then((response)=>{     
@@ -39,9 +39,11 @@ const ViewDonars = ({navigation}) => {
     useEffect(()=>{
         getDonars()
       },[])
-
+    
 
   return (
+
+     
     <View style={styles.container}>
     <View style={styles.header}>
       <View style={styles.searchWrapper}>
@@ -50,7 +52,7 @@ const ViewDonars = ({navigation}) => {
           style={styles.searchInput}
           placeholder="Search here..."
           value={searchText}
-          onChangeText={setsearchText}
+          onChangeText={(text)=>setsearchText(text) }
         />
       </View>
    
@@ -62,22 +64,40 @@ const ViewDonars = ({navigation}) => {
           <RefreshControl refreshing={refreshing} onRefresh={getDonars} />
         }
       >  
-        {data.map((data)=>{
+
+      
+        {
+          
+        data.map((data)=>{
+          if(searchText===""){
             return(
-                <View  key={data._id}>
-                     <View style={styles.items}>
-                    <Text style={styles.item1}>{data.firstName+ " "+data.lastName}</Text>
-                    <Text style={styles.item2}>{data.telNo}</Text>
-                    <Text style={styles.item3}>{data.amount}</Text>
-                    </View>
-                </View>
-            )
+              <View  key={data._id}>
+                   <View style={styles.items}>
+                  <Text style={styles.item1}>{data.firstName+ " "+data.lastName}</Text>
+                  <Text style={styles.item2}>{data.telNo}</Text>
+                  <Text style={styles.item3}>{data.amount}</Text>
+                  </View>
+              </View>
+          )
+          
+          }
+          if(data.firstName.toLowerCase().includes(searchText.toLowerCase())||data.lastName.toLowerCase().includes(searchText.toLowerCase())||data.telNo.toLowerCase().includes(searchText.toLowerCase())){
+            return(
+              <View  key={data._id}>
+                   <View style={styles.items}>
+                  <Text style={styles.item1}>{data.firstName+ " "+data.lastName}</Text>
+                  <Text style={styles.item2}>{data.telNo}</Text>
+                  <Text style={styles.item3}>{data.amount}</Text>
+                  </View>
+              </View>
+          )
+          }
         })}
         </ScrollView>
 
     }
    <TouchableNativeFeedback
-        onPress={() => navigation.navigate("AddDonar")}
+        onPress={() => navigation.navigate("New Donar")}
       >
         <View style={styles.floatingBtn}>
           <FontAwesome5 name="plus" size={24} color="white" />
@@ -125,10 +145,21 @@ const styles = StyleSheet.create({
         marginTop:35,
         marginBottom:20,
         padding:30,
+        backgroundColor: "#fff",
         paddingBottom:40,
+        marginLeft:2,
+        marginRight:2,
         fontsize:24,
-        borderWidth:1,
+        width: "100%",
         borderRadius:10,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        elevation: 5,
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
         flexDirection:"row"
     },
     flatlist: {
