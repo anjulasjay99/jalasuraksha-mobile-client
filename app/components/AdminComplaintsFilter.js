@@ -16,9 +16,9 @@ function AdminComplaintsFilter({ onChangeFilter, onBackdropClick }) {
     startDate: "",
     endDate: "",
   });
-  const [status, setstatus] = useState(null);
+  const [province, setProvince] = useState(null);
   const [provinceArr, setProvinceArr] = useState([
-    { label: "Any", value: "Any" },
+    { label: "Any", value: "" },
     { label: "Southern", value: "Southern" },
     { label: "Western", value: "Western" },
     { label: "Central", value: "Central" },
@@ -36,7 +36,7 @@ function AdminComplaintsFilter({ onChangeFilter, onBackdropClick }) {
     onChangeFilter({
       startDate: dateRange.startDate,
       endDate: dateRange.endDate,
-      status,
+      province,
     });
     onBackdropClick();
   };
@@ -44,7 +44,7 @@ function AdminComplaintsFilter({ onChangeFilter, onBackdropClick }) {
   //clear selected filters
   const clearFilter = () => {
     setdateRange({ startDate: "", endDate: "" });
-    setstatus("Any");
+    setProvince("Any");
     onChangeFilter({
       startDate: "",
       endDate: "",
@@ -87,10 +87,10 @@ function AdminComplaintsFilter({ onChangeFilter, onBackdropClick }) {
         <DropDownPicker
           placeholder="Province"
           open={statusOpen}
-          value={status}
+          value={province}
           items={provinceArr}
           setOpen={setstatusOpen}
-          setValue={setstatus}
+          setValue={setProvince}
           setItems={provinceArr}
           listMode="SCROLLVIEW"
           dropDownContainerStyle={styles.dropDownContainer}

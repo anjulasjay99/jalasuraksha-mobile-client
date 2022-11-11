@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,27 +15,36 @@ import { AntDesign } from '@expo/vector-icons';
 
 function AdminCompCard({ navigation , complaint }){
 
-    const [modalVisible, setModalVisible] = useState(true);
-   
-    const [feedback , setFeedback ] = useState(complaint.feedbacks[0]);
-  //  console.log(feedback.message);
+    const [modalVisible, setModalVisible] = useState(false);
+    let fdbk
+
     function leaveFeedback(){
         navigation.navigate("Leave Feedback" , { complaint });
     }
+
+    try{
+      console.log(typeof(complaint.feedbacks[0].message))
+      fdbk = complaint.feedbacks[0].message
+    }
+    catch{
+      console.log("err");
+    }
+    
+
     return(
         
           
             <View style={styles.container}>
-                <TouchableHighlight onPress={()=>{setModalVisible(!modalVisible)}} >
+
                 <View style={styles.cardDetail}>
                     {
-                    complaint.feedbacks === undefined || complaint.feedbacks.lenght == 0 ? 
+                    complaint.feedbacks[0] === undefined || complaint.feedbacks.lenght == 0 ? 
                     (
-                    <View>
+                    <View style={{marginLeft:10 , marginTop:-25}}>
                         <FontAwesome5 name="exclamation" size={24} color="#996619" />
                     </View>
                     ) : (
-                    <View>
+                    <View style={{marginTop:-25}}>
                         <AntDesign name="checkcircleo" size={24} color="#176D09" />
                     </View>
                     )
@@ -43,31 +52,27 @@ function AdminCompCard({ navigation , complaint }){
 
                     <View style={styles.compDets}>
                         <Text style={styles.headerText}>{complaint.complaintId}</Text>
-                        <Text style={styles.dateText}>{complaint.dateOfComplaint}</Text>
+                        <Text style={styles.dateText}>{complaint.dateOfComplaint.slice(0,10)}</Text>
                         <Text style={styles.bodyText}>{complaint.description}</Text>
                     </View>    
-                    {/* Details */}
                     <View style={styles.compChip}>
-                        {/* <Chip
-                        label="Category"
-                        variant="outlined"
-                        color="#D5F4FF"
-                        /> */}
+ 
                         <View style={styles.chip}>
                             <Text style={styles.chipText}>{complaint.category}</Text>
                         </View>
+                        <TouchableNativeFeedback onPress={()=>{setModalVisible(!modalVisible)}} >
                         <View style={styles.arrowIcon}>
                             <AntDesign name="rightcircle" size={30} color="#092D7A" />
                         </View>
+                        </TouchableNativeFeedback>
                     </View>
                 </View>
-                </TouchableHighlight>        
+                     
         <Modal
             animationType="slide"
             transparent={true}
-            visible={true}
+            visible={modalVisible}
             onRequestClose={() =>{
-                Alert.alert("Modal has been closed.");
                 setModalVisible(!modalVisible);
             }}
         >
@@ -113,7 +118,7 @@ function AdminCompCard({ navigation , complaint }){
 
                 </View>   
                 <View style ={styles.feedback}>
-                  {/* <Text>{complaint.feedbacks}</Text> */}
+                    <Text>{fdbk}</Text>
                   <TouchableNativeFeedback onPress={leaveFeedback}>               
                     <AntDesign name="rightcircle" size={24} color="#222222"  />
                   </TouchableNativeFeedback>

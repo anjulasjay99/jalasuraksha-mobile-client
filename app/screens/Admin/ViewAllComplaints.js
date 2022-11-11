@@ -12,7 +12,7 @@ import {
   } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AdminCompCard from '../../components/AdminCompCard';
-import { LOCALHOST } from "@env";
+import AdminComplaintsFilter from '../../components/AdminComplaintsFilter'
 import axios from "axios";
 
 function ViewAllComplaints({navigation}){
@@ -20,6 +20,8 @@ function ViewAllComplaints({navigation}){
     const [refreshing, setrefreshing] = useState(false);
     const [ complaints , setComplaints ] = useState([]);
     const [searchText, setsearchText] = useState("");
+    const [count , setCount] = useState(0);
+    const [filterVisible, setfilterVisible] = useState(false);
     //show toast message
     const showToast = (msg) => {a
         ToastAndroid.show(msg, ToastAndroid.SHORT);
@@ -28,7 +30,8 @@ function ViewAllComplaints({navigation}){
     const getComplaints = () => {
         setrefreshing(true)
         axios.get(`http://192.168.8.104:8070/complaints/`).then((res) =>{
-            setComplaints(res.data.data);
+            setComplaints(res.data.data.reverse());
+            checkComplaintStatus();
             setrefreshing(false);
 
         }).catch((err) =>{
@@ -38,8 +41,54 @@ function ViewAllComplaints({navigation}){
     }
 
     const toggleFilter = () => {
-        navigation.navigate('Filter Complaints')
+        setfilterVisible(!filterVisible);
       };
+
+    const checkComplaintStatus = () =>{
+        let c = 0;
+        complaints.map((comp) =>{
+            if(comp.feedbacks === undefined || comp.feedbacks.length == 0){
+                c++;
+            }
+        })
+        setCount(c);
+    }  
+
+    const filterData = (filter) =>{
+        let filteredArray = [];
+
+        // Filter By Date
+            if( filter.startDate !== "" && filter.endDate !== "" ) {
+                complaints.map((c) =>{
+                    const date = new Date(c.dateOfComplaint);
+                    const startDate = new Date(filter.startDate);
+                    const endDate = new Date(filter.endDate);
+                    console.log(date , startDate , endDate);
+                    if(date > startDate && date < endDate) {
+                        filteredArray.push(c);
+                    }
+                })
+            }
+            else {
+                filteredArray = complaints;
+            }
+
+        // Filter by Province
+            filteredArray.filter((val) =>{
+                console.log(filter.province);
+                console.log(val.province);
+                if(filter.province === ""){
+                    return val;
+                }
+                else if (val.province.toLowerCase().includes(filter.province.toLowerCase())){
+                    return val
+                }
+            })
+            console.log(filteredArray);
+        // Filter By Category
+
+            setComplaints(filteredArray);
+    }
 
     useEffect(()=>{
         getComplaints();
@@ -68,7 +117,7 @@ function ViewAllComplaints({navigation}){
                 </Pressable>
             </View>    
             <View style={styles.unreadChip}>
-                <Text style={styles.unreadText}> 2 Unread</Text>
+                <Text style={styles.unreadText}> {count} Pending</Text>
             </View>
             <ScrollView
                 contentContainerStyle={styles.scrollViewStyle}
@@ -96,6 +145,17 @@ function ViewAllComplaints({navigation}){
                     );
                 })}
             </ScrollView>
+            {filterVisible ? (
+                <AdminComplaintsFilter
+                    onChangeFilter={filterData}
+                    onBackdropClick={toggleFilter}
+                />
+                )
+                : (
+                    ""
+                )
+                
+            }
         </View>
     )
 }
