@@ -18,7 +18,7 @@ function SubmitFeedback({route}){
         message
     }
     function leaveFeedback(){
-        axios.post(`http://192.168.8.104:8070/complaints/feedbacks/${complaintId}` , feedback).then((res) =>{
+        axios.post(`https://jalasuraksha-backend.herokuapp.com/complaints/feedbacks/${complaintId}` , feedback).then((res) =>{
             const result = res.data.success;
             if(result){
                 Alert.alert("Success!");

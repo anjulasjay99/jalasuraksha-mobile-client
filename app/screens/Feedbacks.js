@@ -16,6 +16,7 @@ import axios from "axios";
 function Feedbacks({ route }) {
   const [reply, setreply] = useState("");
   const [feedbacks, setfeedbacks] = useState([]);
+  const [status, setstatus] = useState("");
 
   const submitReply = () => {
     const complaintId = route.params.complaintId;
@@ -66,6 +67,7 @@ function Feedbacks({ route }) {
 
   useEffect(() => {
     getFeedbacks(route.params.complaintId);
+    setstatus(route.params.status);
   }, []);
 
   return (
@@ -106,24 +108,28 @@ function Feedbacks({ route }) {
           );
         })}
       </ScrollView>
-      <View style={styles.bottomContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Type here..."
-          value={reply}
-          onChangeText={setreply}
-        />
-        <TouchableNativeFeedback onPress={submitReply}>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Feather
-              name="send"
-              size={24}
-              color="#2AB9FE"
-              style={styles.btnSend}
-            />
-          </View>
-        </TouchableNativeFeedback>
-      </View>
+      {route.params.status === "Pending" ? (
+        <View style={styles.bottomContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Type here..."
+            value={reply}
+            onChangeText={setreply}
+          />
+          <TouchableNativeFeedback onPress={submitReply}>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <Feather
+                name="send"
+                size={24}
+                color="#2AB9FE"
+                style={styles.btnSend}
+              />
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+      ) : (
+        ""
+      )}
     </View>
   );
 }

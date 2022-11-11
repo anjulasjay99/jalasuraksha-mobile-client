@@ -78,7 +78,7 @@ function ComplaintsFilter({ onChangeFilter, onBackdropClick }) {
           returnFormat="YYYY-MM-DD"
         ></DatePicker>
         <DropDownPicker
-          placeholder="Category"
+          placeholder="Status"
           open={statusOpen}
           value={status}
           items={statusArr}

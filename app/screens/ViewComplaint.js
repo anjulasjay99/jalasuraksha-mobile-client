@@ -134,6 +134,7 @@ function ViewComplaint({ navigation, route }) {
                 feedbacks={feedbacks}
                 complaintId={complaintId}
                 navigation={navigation}
+                status={status}
                 key={index}
               />
             );
