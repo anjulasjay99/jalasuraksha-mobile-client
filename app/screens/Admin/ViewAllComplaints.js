@@ -26,10 +26,9 @@ function ViewAllComplaints({navigation}){
     const showToast = (msg) => {a
         ToastAndroid.show(msg, ToastAndroid.SHORT);
     };
-
     const getComplaints = () => {
         setrefreshing(true)
-        axios.get(`http://192.168.8.104:8070/complaints/`).then((res) =>{
+        axios.get(`https://jalasuraksha-backend.herokuapp.com/complaints/`).then((res) =>{
             setComplaints(res.data.data.reverse());
             checkComplaintStatus();
             setrefreshing(false);
