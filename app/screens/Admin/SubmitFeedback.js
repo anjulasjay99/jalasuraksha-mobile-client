@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         height:"80%",
         alignItems:"center",
         marginLeft:10,
-        marginRight:10
+        marginRight:10,
     },
     feedbackDesc:{
         backgroundColor: "#F3F1F1",
@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         fontSize: 18,
         marginBottom: 10,
-        color: "#4A4A4A"
+        color: "#4A4A4A",
+        textAlignVertical : 'top',
     },
     submitBtn:{
         backgroundColor: "#2AB9FE",
