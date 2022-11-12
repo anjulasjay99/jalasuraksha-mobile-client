@@ -83,7 +83,6 @@ const AddDonar = ({ navigation }) => {
         <TextInput
               style={styles.input}    
               placeholder="Enter First Name"
-              showSoftInputOnFocus={false}
               value={firstName}
               onChangeText={setfirstName}
             />  
@@ -96,7 +95,7 @@ const AddDonar = ({ navigation }) => {
               placeholder="Enter Last Name"
               value={lastName}
               onChangeText={setlastName}
-              showSoftInputOnFocus={false}
+             
             />  
             
         </View>  
@@ -108,7 +107,6 @@ const AddDonar = ({ navigation }) => {
               value={telNo}
               onChangeText={settelNo}
               keyboardType="number-pad"
-              showSoftInputOnFocus={false}
               maxLength={10}
           
             />  
@@ -122,15 +120,15 @@ const AddDonar = ({ navigation }) => {
               keyboardType="number-pad"
               value={amount}
               onChangeText={setamount}
-              showSoftInputOnFocus={false}
+
             />  
             
         </View>  
         </View>   
         </ScrollView>
-        <TouchableNativeFeedback  >
+        <TouchableNativeFeedback  onPress={submitDonar}>
             <View style={styles.btnSubmit}>
-            <Button title="Add Donar" onPress={submitDonar} />
+            <Text style={styles.btnText}>Add Donar</Text>
               
             </View>
            </TouchableNativeFeedback>
@@ -143,12 +141,19 @@ const styles = StyleSheet.create({
       padding: 0,
       backgroundColor: "#fff",
       flex: 1,
- flexDirection: "column",
+      flexDirection: "column",
     },
     btnSubmit: {
     
-      marginTop:80,
-      marginBottom:0
+     backgroundColor: "#2AB9FE",
+    flexDirection: "row",
+    justifyContent: "center",
+    width:'90%',
+    marginBottom:40,
+    marginLeft:20,
+    padding: 15,
+    alignItems: "center",
+    borderRadius: 12,
    },
     text:{
       flex: 1,
