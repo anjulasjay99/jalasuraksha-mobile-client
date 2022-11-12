@@ -100,7 +100,6 @@ export const PaymentOption = ({navigation}) => {
             <TextInput
               style={styles.input}    
               placeholder="Enter Full Name"
-              showSoftInputOnFocus={false}
               value={fullName}
               onChangeText={setfullName}
             />  
@@ -112,7 +111,7 @@ export const PaymentOption = ({navigation}) => {
           placeholder="1234 1234 1234"
           value={cardNo}
           onChangeText={setcardNo}
-          maxLength={10}    
+          maxLength={16}    
           />
           
           <View style={{position:'absolute',right:10,top:2}}>
@@ -159,7 +158,7 @@ export const PaymentOption = ({navigation}) => {
               <TextInput
               style={styles.cvv}    
               placeholder="CVV"
-              showSoftInputOnFocus={false}
+             
               value={cvv}
               onChangeText={setcvv}
             /> 
@@ -245,7 +244,7 @@ const styles = StyleSheet.create({
     fontSize:20,
     borderWidth: 2,
     paddingTop:12,
-    paddingRight:40,
+    paddingRight:28,
     borderRadius: 12,
     borderColor: 'grey',
     flexDirection:'row'
@@ -255,7 +254,7 @@ const styles = StyleSheet.create({
     height: 50,
     width:'48%',
     marginTop:20,
-    marginLeft:15,
+    marginLeft:20,
     fontSize:20,
     borderWidth: 2,
     padding: 10,
