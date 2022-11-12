@@ -11,7 +11,7 @@ function Home({ navigation }) {
           style={styles.image}
         ></Image>
       </View>
-      <Text style={styles.heading}>Hello World</Text>
+      <Text style={styles.heading}>JalaSuraksha</Text>
       <Pressable onPress={() => navigation.navigate("Complaints")}>
         <Text style={{ color: "blue" }}>Complaints</Text>
       </Pressable>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
+    
   },
   heading: {
     fontSize: 28,
@@ -58,10 +58,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   imageContainer:{
-    height:"80%"
+    position: 'absolute',
+    top : 0,
+    width : '100%',
   },
   image:{
-    
+   height : 800,
+    width : '100%',
+    borderBottomRightRadius : -10
   }
 });
 

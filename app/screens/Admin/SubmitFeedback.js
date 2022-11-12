@@ -13,7 +13,7 @@ import {
 } from "react-native";
 
 
-function SubmitFeedback({route}){
+function SubmitFeedback({navigation , route}){
 
     const [complaintId , setComplaintId ] = useState("");
     const [message , setFeedback ] = useState("");
@@ -25,7 +25,7 @@ function SubmitFeedback({route}){
         axios.post(`https://jalasuraksha-backend.herokuapp.com/complaints/feedbacks/${complaintId}` , feedback).then((res) =>{
             const result = res.data.success;
             if(result){
-                Alert.alert("Success!");
+                navigation.navigate('Success Feedback');
             }
             else{
                 Alert.alert("Error in leaving feedback!");
