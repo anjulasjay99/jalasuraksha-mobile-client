@@ -11,16 +11,23 @@ import {
 import DatePicker from "react-native-date-ranges";
 import DropDownPicker from "react-native-dropdown-picker";
 
-function ComplaintsFilter({ onChangeFilter, onBackdropClick }) {
+function AdminComplaintsFilter({ onChangeFilter, onBackdropClick }) {
   const [dateRange, setdateRange] = useState({
     startDate: "",
     endDate: "",
   });
-  const [status, setstatus] = useState(null);
-  const [statusArr, setstatusArr] = useState([
-    { label: "Pending", value: "Pending" },
-    { label: "Resolved", value: "Resolved" },
-    { label: "Any", value: "Any" },
+  const [province, setProvince] = useState(null);
+  const [provinceArr, setProvinceArr] = useState([
+    { label: "Any", value: "" },
+    { label: "Southern", value: "Southern" },
+    { label: "Western", value: "Western" },
+    { label: "Central", value: "Central" },
+    { label: "Sabaragamuwa", value: "Sabaragamuwa" },
+    { label: "Eastern", value: "Eastern" },
+    { label: "North Western", value: "North Western" },
+    { label: "North Central", value: "North Central" },
+    { label: "Uva", value: "Uva" },
+    { label: "Northern", value: "Northern" },
   ]);
   const [statusOpen, setstatusOpen] = useState(false);
 
@@ -29,7 +36,7 @@ function ComplaintsFilter({ onChangeFilter, onBackdropClick }) {
     onChangeFilter({
       startDate: dateRange.startDate,
       endDate: dateRange.endDate,
-      status,
+      province,
     });
     onBackdropClick();
   };
@@ -37,7 +44,7 @@ function ComplaintsFilter({ onChangeFilter, onBackdropClick }) {
   //clear selected filters
   const clearFilter = () => {
     setdateRange({ startDate: "", endDate: "" });
-    setstatus("Any");
+    setProvince("Any");
     onChangeFilter({
       startDate: "",
       endDate: "",
@@ -78,13 +85,13 @@ function ComplaintsFilter({ onChangeFilter, onBackdropClick }) {
           returnFormat="YYYY-MM-DD"
         ></DatePicker>
         <DropDownPicker
-          placeholder="Status"
+          placeholder="Province"
           open={statusOpen}
-          value={status}
-          items={statusArr}
+          value={province}
+          items={provinceArr}
           setOpen={setstatusOpen}
-          setValue={setstatus}
-          setItems={setstatusArr}
+          setValue={setProvince}
+          setItems={provinceArr}
           listMode="SCROLLVIEW"
           dropDownContainerStyle={styles.dropDownContainer}
           style={styles.dropDown}
@@ -199,4 +206,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComplaintsFilter;
+export default AdminComplaintsFilter;
