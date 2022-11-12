@@ -80,6 +80,34 @@ function Home({ navigation }) {
             <Text style={styles.cardTitle}>Admin Complaints</Text>
           </View>
         </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback
+          onPress={() => navigation.navigate("Health Sector")}
+        >
+          <View style={[styles.card, styles.lastCard]}>
+            <MaterialCommunityIcons
+              name="doctor"
+              size={28}
+              color="black"
+              style={styles.cardIcon}
+            />
+            <Text style={styles.cardTitle}>Health Care</Text>
+          </View>
+        </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback
+          onPress={() => navigation.navigate("Health Session")}
+        >
+          <View style={[styles.card, styles.lastCard]}>
+            <MaterialCommunityIcons
+              name="video"
+              size={28}
+              color="black"
+              style={styles.cardIcon}
+            />
+            <Text style={styles.cardTitle}>Health Sessions</Text>
+          </View>
+        </TouchableNativeFeedback>
       </View>
 
       <StatusBar style="auto" />
