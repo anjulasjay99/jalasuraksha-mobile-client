@@ -6,8 +6,12 @@ import {
   StyleSheet,
   TextInput,
   TouchableNativeFeedback,
-  Alert
+  Alert,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
 } from "react-native";
+
 
 function SubmitFeedback({route}){
 
@@ -32,10 +36,12 @@ function SubmitFeedback({route}){
         setComplaintId(route.params.complaint.complaintId);
     },[])
     return(
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.complaintTitle}>
                 <Text style={styles.complaintText}>{complaintId}</Text>
             </View>
+        </TouchableWithoutFeedback>
             <View style={styles.feedbackContainer}>
                 <TextInput
                     multiline={true}
@@ -46,11 +52,11 @@ function SubmitFeedback({route}){
                 />
             </View>
             <TouchableNativeFeedback onPress={leaveFeedback}>
-                <View style={styles.submitBtn}>
+                <View style={styles.submitBtn} >
                     <Text style={styles.btnText}>Submit</Text>
                 </View>    
             </TouchableNativeFeedback>    
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

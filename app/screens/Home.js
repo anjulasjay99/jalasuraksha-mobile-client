@@ -1,10 +1,16 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, ImageBackground , Image} from "react-native";
 
 function Home({ navigation }) {
   return (
     <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={require('../assets/home.jpg')}
+          style={styles.image}
+        ></Image>
+      </View>
       <Text style={styles.heading}>Hello World</Text>
       <Pressable onPress={() => navigation.navigate("Complaints")}>
         <Text style={{ color: "blue" }}>Complaints</Text>
@@ -32,6 +38,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginBottom: 20,
   },
+  imageContainer:{
+    height:"80%"
+  },
+  image:{
+    
+  }
 });
 
 export default Home;
