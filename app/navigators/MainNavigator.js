@@ -7,6 +7,14 @@ import ViewComplaint from "../screens/ViewComplaint";
 import Feedbacks from "../screens/Feedbacks";
 import ViewAllComplaints from "../screens/Admin/ViewAllComplaints";
 import SubmitFeedback from "../screens/Admin/SubmitFeedback";
+import HealthPosts from "../screens/HealthSector/HealthPosts";
+import NewHealthAdvise from "../screens/HealthSector/NewHealthAdvise";
+import PostAcknowledgment from "../screens/HealthSector/PostAcknowledgment";
+import ViewHealthPost from "../screens/HealthSector/ViewHealthPost";
+import PostFeedbacks from "../screens/HealthSector/PostFeedbacks";
+import HealthSessions from "../screens/HealthSector/HealthSessions";
+import NewHealthSession from "../screens/HealthSector/NewSession";
+import ViewHealthSession from "../screens/HealthSector/ViewHealthSession";
 //create a stack navigator
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +65,46 @@ export default function MainNavigator() {
       <Stack.Screen
         name="Leave Feedback"
         component={SubmitFeedback}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Health Sector"
+        component={HealthPosts}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="New Health Post"
+        component={NewHealthAdvise}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Post Acknowledgement"
+        component={PostAcknowledgment}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="View Health Post"
+        component={ViewHealthPost}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Post Feedbacks"
+        component={PostFeedbacks}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Health Session"
+        component={HealthSessions}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="New Session"
+        component={NewHealthSession}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="View Health Session"
+        component={ViewHealthSession}
         options={headerOptions}
       />
     </Stack.Navigator>

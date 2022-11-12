@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from "react-native";
-// SafeAreaView / Button / Alert /
+
 import { FontAwesome } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import axios from "axios";
@@ -22,14 +22,24 @@ import { LOCALHOST } from "@env";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import * as ImagePicker from "expo-image-picker";
 import assets from "../../HealthConstants/assets";
+import { set } from "react-native-reanimated";
 
-function NewHealthPost({ navigation }) {
+function NewSession({ navigation }) {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
   const [fnFocus, setfnFocus] = useState(false);
   const [descFocus, setdescFocus] = useState(false);
-  const [image, setImage] = useState(null);
-  const [Pic, SetPic] = React.useState("");
+  const [platforms, setPlatforms] = useState([
+    { label: "Zoom", value: "Zoom" },
+    { label: "Teams", value: "Teams" },
+    { label: "Google Meet", value: "Google Meet" },
+  ]);
+  const [platformOpen, setplatformOpen] = useState(false);
+  const [selectedPlatform, setselectedPlatform] = useState(null);
+  const [meetingLink, setMeetingLink] = useState("");
+  const [sessionDate, setSessionDate] = useState("23/11/2022");
+  const [time, setTime] = useState("12:10 PM");
+  const [conductors, setConductors] = useState("");
 
   var randomImages = [
     assets.img1,
@@ -41,50 +51,37 @@ function NewHealthPost({ navigation }) {
     assets.img8,
   ];
 
-  const uploadImage = () => {
-    let options = {
-      mediaType: "photo",
-      quality: 1,
-      includeBase64: true,
-    };
-
-    ImagePicker.launchImageLibraryAsync(options, (response) => {
-      console.log(response);
-
-      if (response.didCancel) {
-        showToast("Cancelled image selections");
-      } else if (response.errorCode == "permission") {
-        showToast("Permission not satisfied");
-      } else if (response.errorCode == "others") {
-        showToast(response.errorMessage);
-      } else if (response.assets[0].fileSize > 209719) {
-        Alert.alert(
-          "Maximum image size exceeded",
-          "Please choose image below 2MB",
-          [{ text: "Ok" }]
-        );
-      } else {
-        SetPic(response.assets[0].base64);
-      }
-    });
-  };
-
-  const submitPost = () => {
-    if (title !== "" && content !== "") {
+  const submitSession = () => {
+    if (
+      title !== "" &&
+      description !== "" &&
+      selectedPlatform !== "" &&
+      meetingLink !== "" &&
+      sessionDate !== "" &&
+      time !== "" &&
+      conductors !== ""
+    ) {
       const data = {
         userEmail: "praveenpeiris@gmail.com",
         title,
-        content,
-        Pic,
+        description,
+        platform: selectedPlatform,
+        meetingLink,
+        sessionDate,
+        time,
+        conductors,
       };
       console.log(data);
       axios
 
-        .post(` https://jalasuraksha-backend.herokuapp.com/healthPosts`, data)
+        .post(
+          ` https://jalasuraksha-backend.herokuapp.com/healthSessions`,
+          data
+        )
         .then((res) => {
           showToast("Success!");
           navigation.navigate("Post Acknowledgement", {
-            id: res.data.data.postId,
+            id: res.data.data.sessionId,
           });
         })
         .catch((err) => {
@@ -99,7 +96,7 @@ function NewHealthPost({ navigation }) {
   //show alert
   const showAlert = (msg) => {
     Alert.alert(
-      "New Health Post",
+      "New Session",
       msg,
       [
         {
@@ -134,38 +131,16 @@ function NewHealthPost({ navigation }) {
           on
         />
         <View style={styles.separator} />
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <View style={styles.separator} />
-        </View>
-        <View>
-          <TouchableHighlight>
-            <Image
-              source={require("../../assets/uploadImgN.png")}
-              style={{
-                width: 200,
-                height: 200,
-                marginLeft: 90,
-                marginBottom: 10,
-              }}
-              onPress={() => uploadImage()}
-            />
-          </TouchableHighlight>
-        </View>
-        <View>
-          <Button title="Pick an image" onPress={() => uploadImage()} />
-        </View>
 
         <Text
           style={{
             color: "#4A4A4A",
             fontSize: 18,
-            marginTop: 10,
+            marginTop: 0,
             marginBottom: 10,
           }}
         >
-          Post Content:
+          Description:
         </Text>
         <TextInput
           multiline={true}
@@ -175,8 +150,94 @@ function NewHealthPost({ navigation }) {
             styles.inputDesc,
           ]}
           placeholder="Type your post content here..."
-          value={content}
-          onChangeText={setContent}
+          value={description}
+          onChangeText={setDescription}
+          onBlur={() => setdescFocus(false)}
+          onFocus={() => setdescFocus(true)}
+          placeholderTextColor="#b5b5ba"
+        />
+        <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+          <FontAwesome name="video-camera" size={24} color="black" />
+          <Text
+            style={{
+              color: "#4A4A4A",
+              fontSize: 18,
+              marginTop: 0,
+              marginBottom: 10,
+              marginLeft: 10,
+            }}
+          >
+            Conducting Platform:
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+          <DropDownPicker
+            placeholder="Category"
+            open={platformOpen}
+            value={selectedPlatform}
+            items={platforms}
+            setOpen={setplatformOpen}
+            setValue={setselectedPlatform}
+            setItems={setPlatforms}
+            arrowIconStyle={{ color: "#A4A4A4" }}
+            listMode="SCROLLVIEW"
+            dropDownContainerStyle={styles.dropDownContainer}
+            style={styles.dropDown}
+            selectedItemLabelStyle={styles.dropDownSelected}
+            labelStyle={styles.dropDownLabel}
+            listItemLabelStyle={styles.dropDownLabel}
+            placeholderStyle={styles.dropDownPlaceholder}
+          />
+        </View>
+        <TextInput
+          style={[
+            styles.inputText,
+            fnFocus ? styles.inputFocusBorder : styles.inputBlurBorder,
+          ]}
+          placeholder="Meeting Link"
+          value={meetingLink}
+          onChangeText={setMeetingLink}
+          onBlur={() => setfnFocus(false)}
+          onFocus={() => setfnFocus(true)}
+          placeholderTextColor="#b5b5ba"
+          on
+        />
+        <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+          <FontAwesome name="calendar" size={24} color="black" />
+          <Text style={{ fontSize: 18, marginLeft: 5 }}>Date</Text>
+          <FontAwesome
+            name="clock-o"
+            size={24}
+            color="black"
+            style={{ marginLeft: 55 }}
+          />
+          <Text style={{ fontSize: 18, marginLeft: 5 }}>Time</Text>
+        </View>
+        <View style={styles.separator2} />
+        <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+          <FontAwesome name="users" size={24} color="black" />
+          <Text
+            style={{
+              color: "#4A4A4A",
+              fontSize: 18,
+              marginTop: 0,
+              marginBottom: 10,
+              marginLeft: 10,
+            }}
+          >
+            Conductors:
+          </Text>
+        </View>
+        <TextInput
+          multiline={true}
+          style={[
+            styles.inputText,
+            descFocus ? styles.inputFocusBorder : styles.inputBlurBorder,
+            styles.inputDesc,
+          ]}
+          placeholder="Event conductors details.."
+          value={conductors}
+          onChangeText={setConductors}
           onBlur={() => setdescFocus(false)}
           onFocus={() => setdescFocus(true)}
           placeholderTextColor="#b5b5ba"
@@ -184,7 +245,7 @@ function NewHealthPost({ navigation }) {
       </ScrollView>
       <View>
         <Button title="Cancel" style={{ height: 50 }} />
-        <TouchableNativeFeedback onPress={submitPost}>
+        <TouchableNativeFeedback onPress={submitSession}>
           <View style={styles.btnSubmit}>
             <Text style={styles.btnText}>Submit</Text>
             <FontAwesome name="long-arrow-right" size={24} color="white" />
@@ -234,7 +295,7 @@ const styles = StyleSheet.create({
   dropDown: {
     backgroundColor: "#F3F1F1",
     height: 60,
-    width: "100%",
+    width: "30%",
     padding: 10,
     borderRadius: 5,
     fontSize: 18,
@@ -252,9 +313,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
+    height: 60,
   },
   dropDownSelected: {
     color: "#2AB9FE",
+    height: 60,
   },
   dropDownLabel: {
     color: "#4A4A4A",
@@ -270,8 +333,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: "#A4A4A4",
   },
+  separator2: {
+    height: 1,
+    marginTop: 30,
+    marginBottom: 10,
+    backgroundColor: "#A4A4A4",
+  },
   inputDesc: {
-    height: 200,
+    height: 100,
     textAlignVertical: "top",
     color: "#4A4A4A",
   },
@@ -304,4 +373,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewHealthPost;
+export default NewSession;

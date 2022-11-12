@@ -21,7 +21,6 @@ import axios from "axios";
 import { LOCALHOST } from "@env";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import * as ImagePicker from "expo-image-picker";
-import assets from "../../HealthConstants/assets";
 
 function NewHealthPost({ navigation }) {
   const [title, setTitle] = useState("");
@@ -30,17 +29,6 @@ function NewHealthPost({ navigation }) {
   const [descFocus, setdescFocus] = useState(false);
   const [image, setImage] = useState(null);
   const [Pic, SetPic] = React.useState("");
-
-  var randomImages = [
-    assets.img1,
-    assets.img2,
-    assets.img3,
-    assets.img5,
-    assets.img6,
-    assets.img7,
-    assets.img8,
-  ];
-
   const uploadImage = () => {
     let options = {
       mediaType: "photo",
@@ -50,23 +38,52 @@ function NewHealthPost({ navigation }) {
 
     ImagePicker.launchImageLibraryAsync(options, (response) => {
       console.log(response);
-
+      console.log("testttttttt1");
       if (response.didCancel) {
+        console.log("testtttttt2t");
         showToast("Cancelled image selections");
       } else if (response.errorCode == "permission") {
         showToast("Permission not satisfied");
+        console.log("testtttttt3");
       } else if (response.errorCode == "others") {
+        console.log("testtttttt4");
         showToast(response.errorMessage);
       } else if (response.assets[0].fileSize > 209719) {
+        console.log("testtttttt5");
         Alert.alert(
           "Maximum image size exceeded",
           "Please choose image below 2MB",
           [{ text: "Ok" }]
         );
       } else {
+        console.log("testttttttt6");
+
         SetPic(response.assets[0].base64);
       }
     });
+  };
+
+  const pickImage = () => {
+    // No permissions request is necessary for launching the image library
+    let result = ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      // allowsEditing: true,
+      // aspect: [4, 3],
+      // quality: 1,
+    });
+    console.log("hu1");
+    console.log(result);
+    console.log("hu2");
+
+    if (!result.canceled) {
+      console.log(result.uri);
+      setImage(result.uri);
+    }
+  };
+
+  const openGallery = async () => {
+    const response = await launchImageLibrary(options);
+    console.log(response);
   };
 
   const submitPost = () => {
@@ -138,23 +155,49 @@ function NewHealthPost({ navigation }) {
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
           <View style={styles.separator} />
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Button
+              title="Pick an image from camera roll"
+              onPress={pickImage}
+            />
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 200, height: 200 }}
+              />
+            )}
+          </View>
         </View>
         <View>
           <TouchableHighlight>
+            {/* <Image
+              size={250}
+              source={{ uri: "data:image/jpg;base64," + Pic }}
+              style={{ width: 200, height: 200 }}
+              onPress={() => uploadImage()}
+            /> */}
+
             <Image
-              source={require("../../assets/uploadImgN.png")}
-              style={{
-                width: 200,
-                height: 200,
-                marginLeft: 90,
-                marginBottom: 10,
-              }}
+              source={{ uri: "data:image/jpg;base64," + Pic }}
+              style={{ width: 200, height: 200 }}
               onPress={() => uploadImage()}
             />
           </TouchableHighlight>
         </View>
         <View>
-          <Button title="Pick an image" onPress={() => uploadImage()} />
+          <Button
+            title="Pick an image"
+            mode="contained"
+            onPress={() => uploadImage()}
+          />
+
+          <Button
+            title="Remove image"
+            mode="contained"
+            onPress={() => removeImage()}
+          />
         </View>
 
         <Text
