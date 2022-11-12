@@ -8,7 +8,7 @@ import ViewComplaint from "../screens/ViewComplaint";
 import Feedbacks from "../screens/Feedbacks";
 import DonateSuccess from "../screens/DonateSuccess";
 import AddDonar from "../screens/AddDonar";
-import  { PaymentOption } from "../screens/paymentOption";
+import { PaymentOption } from "../screens/paymentOption";
 import ViewFunds from "../screens/viewFunds";
 import DonarSuccess from "../screens/DonarSuccess";
 import ViewDonars from "../screens/ViewDonars";
@@ -18,6 +18,14 @@ import FeedbackSuccess from "../screens/Admin/FeedbackSuccess";
 import Map from "../screens/Map";
 import ViewAllComplaints from "../screens/Admin/ViewAllComplaints";
 import SubmitFeedback from "../screens/Admin/SubmitFeedback";
+import HealthPosts from "../screens/HealthSector/HealthPosts";
+import NewHealthAdvise from "../screens/HealthSector/NewHealthAdvise";
+import PostAcknowledgment from "../screens/HealthSector/PostAcknowledgment";
+import ViewHealthPost from "../screens/HealthSector/ViewHealthPost";
+import PostFeedbacks from "../screens/HealthSector/PostFeedbacks";
+import HealthSessions from "../screens/HealthSector/HealthSessions";
+import NewHealthSession from "../screens/HealthSector/NewSession";
+import ViewHealthSession from "../screens/HealthSector/ViewHealthSession";
 import AdminComplaintsFilter from "../components/AdminComplaintsFilter";
 
 //create a stack navigator
@@ -63,12 +71,12 @@ export default function MainNavigator() {
         component={Feedbacks}
         options={headerOptions}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Add Funds"
         component={AddFunds}
         options={headerOptions}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Donation Success"
         component={DonateSuccess}
         options={headerOptions}
@@ -83,17 +91,17 @@ export default function MainNavigator() {
         component={PaymentOption}
         options={headerOptions}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="View Funds"
         component={ViewFunds}
         options={headerOptions}
       />
-         <Stack.Screen
+      <Stack.Screen
         name="Donar Success"
         component={DonarSuccess}
         options={headerOptions}
       />
-         <Stack.Screen
+      <Stack.Screen
         name="View Donars"
         component={ViewDonars}
         options={headerOptions}
@@ -104,12 +112,12 @@ export default function MainNavigator() {
         component={PaymentSuccess}
         options={headerOptions}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="Donations"
         component={DonationHome}
         options={headerOptions}
       />
-     
+
       <Stack.Screen
         name="Admin View Complaints"
         component={ViewAllComplaints}
@@ -118,6 +126,46 @@ export default function MainNavigator() {
       <Stack.Screen
         name="Leave Feedback"
         component={SubmitFeedback}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Health Sector"
+        component={HealthPosts}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="New Health Post"
+        component={NewHealthAdvise}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Post Acknowledgement"
+        component={PostAcknowledgment}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="View Health Post"
+        component={ViewHealthPost}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Post Feedbacks"
+        component={PostFeedbacks}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Health Session"
+        component={HealthSessions}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="New Session"
+        component={NewHealthSession}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="View Health Session"
+        component={ViewHealthSession}
         options={headerOptions}
       />
       <Stack.Screen
