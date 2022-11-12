@@ -45,6 +45,12 @@ function HealthPostCard({ navigation, post }) {
           <View>
             <Text style={styles.bodyText}>{daysCount} days ago</Text>
           </View>
+
+          <View>
+            <Text style={styles.bodyText} numberOfLines={3}>
+              {post.content}
+            </Text>
+          </View>
         </View>
 
         <Image
@@ -98,7 +104,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingLeft: 20,
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "space-between",
   },
