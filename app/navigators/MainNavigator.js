@@ -14,7 +14,7 @@ import DonarSuccess from "../screens/DonarSuccess";
 import ViewDonars from "../screens/ViewDonars";
 import PaymentSuccess from "../screens/PaymentSuccess";
 import DonationHome from "../screens/DonationHome";
-
+import FeedbackSuccess from "../screens/Admin/FeedbackSuccess";
 import Map from "../screens/Map";
 import ViewAllComplaints from "../screens/Admin/ViewAllComplaints";
 import SubmitFeedback from "../screens/Admin/SubmitFeedback";
@@ -123,6 +123,11 @@ export default function MainNavigator() {
       <Stack.Screen
         name="Filter Complaints"
         component={AdminComplaintsFilter}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Success Feedback"
+        component={FeedbackSuccess}
         options={headerOptions}
       />
     </Stack.Navigator>

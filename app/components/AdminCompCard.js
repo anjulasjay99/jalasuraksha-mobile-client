@@ -19,6 +19,7 @@ function AdminCompCard({ navigation , complaint }){
     let fdbk
 
     function leaveFeedback(){
+        setModalVisible(!modalVisible);
         navigation.navigate("Leave Feedback" , { complaint });
     }
 
@@ -80,6 +81,9 @@ function AdminCompCard({ navigation , complaint }){
             <View style={styles.modalView}>
                 <View style={styles.complaintTitle}>
                     <Text style={styles.complaintNumber}>{complaint.complaintId}</Text>
+                    <TouchableNativeFeedback onPress={() =>{setModalVisible(!modalVisible)}}>               
+                      <AntDesign name="downcircle" size={24} color="#222222" style={{marginLeft:70}}  />
+                    </TouchableNativeFeedback>
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.label}>Full Name</Text>
@@ -123,6 +127,7 @@ function AdminCompCard({ navigation , complaint }){
                     <AntDesign name="rightcircle" size={24} color="#222222"  />
                   </TouchableNativeFeedback>
                 </View>
+ 
   
             </View>
 
@@ -207,7 +212,9 @@ const styles = StyleSheet.create({
       },
       complaintTitle:{
         alignItems:"center",
-        marginBottom:20
+        marginBottom:20,
+        flexDirection:"row",
+     
       },
       row: {
         flexDirection: "row",
@@ -235,7 +242,8 @@ const styles = StyleSheet.create({
       complaintNumber:{
         fontSize: 20,
         color: "black",
-        fontWeight: "700"
+        fontWeight: "700",
+        marginLeft:"25%"
       },
       btnSubmit: {
         backgroundColor: "#2AB9FE",
@@ -252,7 +260,8 @@ const styles = StyleSheet.create({
       },
       compDets: {
         marginLeft:15,
-        marginTop:15
+        marginTop:15,
+        width:"55%"
       },
       compChip:{
         marginLeft:10,

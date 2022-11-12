@@ -6,10 +6,14 @@ import {
   StyleSheet,
   TextInput,
   TouchableNativeFeedback,
-  Alert
+  Alert,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
 } from "react-native";
 
-function SubmitFeedback({route}){
+
+function SubmitFeedback({navigation , route}){
 
     const [complaintId , setComplaintId ] = useState("");
     const [message , setFeedback ] = useState("");
@@ -21,7 +25,7 @@ function SubmitFeedback({route}){
         axios.post(`https://jalasuraksha-backend.herokuapp.com/complaints/feedbacks/${complaintId}` , feedback).then((res) =>{
             const result = res.data.success;
             if(result){
-                Alert.alert("Success!");
+                navigation.navigate('Success Feedback');
             }
             else{
                 Alert.alert("Error in leaving feedback!");
@@ -32,10 +36,12 @@ function SubmitFeedback({route}){
         setComplaintId(route.params.complaint.complaintId);
     },[])
     return(
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.complaintTitle}>
                 <Text style={styles.complaintText}>{complaintId}</Text>
             </View>
+        </TouchableWithoutFeedback>
             <View style={styles.feedbackContainer}>
                 <TextInput
                     multiline={true}
@@ -46,11 +52,11 @@ function SubmitFeedback({route}){
                 />
             </View>
             <TouchableNativeFeedback onPress={leaveFeedback}>
-                <View style={styles.submitBtn}>
+                <View style={styles.submitBtn} >
                     <Text style={styles.btnText}>Submit</Text>
                 </View>    
             </TouchableNativeFeedback>    
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
