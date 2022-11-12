@@ -10,7 +10,7 @@ import {
 import assets from "../../HealthConstants/assets";
 
 function HealthPostCard({ navigation, post }) {
-  const [daysCount, setdaysCount] = useState(0);
+  const [daysCount, setdaysCount] = useState(2);
 
   var randomImages = [
     assets.img1,
@@ -41,7 +41,6 @@ function HealthPostCard({ navigation, post }) {
         <View style={styles.detailsCont}>
           <View>
             <Text style={styles.headerText}>{post.title}</Text>
-            {/* <Text style={styles.bodyText}>ID : {post.postId}</Text> */}
           </View>
           <View>
             <Text style={styles.bodyText}>{daysCount} days ago</Text>
@@ -51,7 +50,7 @@ function HealthPostCard({ navigation, post }) {
         <Image
           source={randomImages[Math.floor(Math.random() * randomImages.length)]}
           style={{
-            width: "60%",
+            width: "40%",
             height: "50%",
             borderTopLeftRadius: 5,
             borderTopRightRadius: 5,

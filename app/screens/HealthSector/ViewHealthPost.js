@@ -124,12 +124,13 @@ function ViewHealthPost({ navigation, route }) {
           source={randomImages[Math.floor(Math.random() * randomImages.length)]}
           style={{
             width: "100%",
-            height: "20%",
+            height: "30%",
             borderTopLeftRadius: 5,
             borderTopRightRadius: 5,
             marginTop: 5,
           }}
         />
+        <View style={styles.separator} />
         <View>
           <Text style={styles.label}>Content:</Text>
           <Text style={styles.value}>{content}</Text>
@@ -184,6 +185,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     backgroundColor: "#fff",
+    flex: 1,
   },
   heading: {
     fontSize: 16,
