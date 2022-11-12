@@ -111,7 +111,7 @@ function AddFunds({ navigation }) {
             <TextInput
               style={styles.input}    
               placeholder="Enter Amount"
-              showSoftInputOnFocus={false}
+     
               value={amount}
               onChangeText={setamount}
               keyboardType="number-pad"
@@ -134,9 +134,9 @@ function AddFunds({ navigation }) {
                 listItemLabelStyle={styles.dropDownLabel}
                 placeholderStyle={styles.dropDownPlaceholder}
               />
-            <TouchableNativeFeedback  >
+            <TouchableNativeFeedback  onPress={submitFunds}>
             <View style={styles.btnSubmit}>
-            <Button title="Add Donation" onPress={submitFunds} />
+            <Text style={styles.btnText}>Add Donation</Text>
               
             </View>
            </TouchableNativeFeedback>
@@ -197,8 +197,14 @@ const styles = StyleSheet.create({
   
   btnSubmit: {
     
-     marginTop:80,
-     marginBottom:0
+    backgroundColor: "#2AB9FE",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: 5,
+    marginTop:60,
+    paddingBottom: 5,
+    alignItems: "center",
+    borderRadius: 12,
   },
   btnText: {
     fontSize: 24,
